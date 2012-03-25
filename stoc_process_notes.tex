@@ -1,0 +1,679 @@
+\documentclass{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsfonts}
+\newtheorem{ineq}{Inequality}
+\newtheorem{eq}{Equality}
+\newtheorem{target}{Target}
+\usetheme{Berlin}
+\useoutertheme{infolines}
+\setbeamertemplate{navigation symbols}{}
+\title[Stochastic Process]{Lecture notes of Stochastic Process}
+\subtitle{lectured by prof. Hsueh-I Lu}
+\author{pishen}
+\institute[AlgoLab]{AlgoLab, CSIE, NTU}
+
+\begin{document}
+\begin{frame}[plain]
+	\titlepage
+\end{frame}
+
+\begin{frame}
+	\begin{center}
+		{\Huge Limiting Probabilities}
+	\end{center}
+\end{frame}
+
+\begin{frame}{Outline}
+	\begin{enumerate}
+		\item Limiting probabilities
+		\item Stationary distribution
+		\item Long-run proportion
+		\item (Inverse of) Expected return time
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Limiting Probabilities}
+	\begin{definition}
+		Number $\pi_j$ is the \textit{limiting probability} of $j$ if
+		\[
+		\pi_j = \lim_{n \to \infty} P^n_{ij}
+		\]
+		holds for all states $i \in S$ ($S \subseteq \mathbb{N}$ is the state space).
+	\end{definition}
+	\begin{itemize}
+		\item $\pi_j$ is independent of $i$.
+		\item $\lim_{n \to \infty} P^n = 
+			\begin{pmatrix}
+				\pi \\
+				\pi \\
+				\vdots
+			\end{pmatrix}$
+			, where $\pi = (\pi_1, \pi_2, \ldots)$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Stationary Probability Distribution}
+	\begin{definition}
+		Non-negative row vector $\pi = (\pi_1, \pi_2, \ldots)$
+		is a \textit{stationary probability distribution} of $\mathbb{X}$
+		if $\pi \times P = \pi$ holds and $\sum_{i \in S} \pi_i = 1$
+	\end{definition}
+	\begin{itemize}
+		\item $\pi$ is a normalized left eigenvector with eigenvalue $=1$.
+		\item If $X(0)$ has distribution $\pi$, then $X(t)$ has the same distribution $\pi$
+			for all $t \geq 1$.
+			$\pi$ is also called as \textit{steady-state distribution}.
+		\item It doesn't mean that each $X(t)$ become independent.
+			$\pi$ only means the distribution of $X(t)$ when the previous random variable's value is unknown.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Theorem 1}
+	\begin{theorem}
+		Let $\mathbb{X}$ be an \textit{irreducible}, \textit{aperiodic}, \textit{positive recurrent} Markov chain, then
+		\begin{itemize}
+			\item The limiting probability $\pi_j$ of each state $j$ exists.
+			\item $\pi = (\pi_1, \pi_2, \ldots)$ is the unique stationary probability distribution.
+		\end{itemize}
+	\end{theorem}
+	\begin{itemize}
+		\item The proof will be stated later.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Expected return time}
+	\begin{definition}
+		The \textit{expected return time} of state $i \in S$ is
+		\[
+		\mu_i = \sum_{n \geq 1} n \cdot f_i^{(n)}
+		\]
+		where
+		\[
+		f_i^{(n)} = P(\min\{t:X(t) = i, t\geq 1\} = n | X(0) = i)
+		\]
+	\end{definition}
+	\begin{itemize}
+		\item $f_i = \sum_{n \geq 1} f_i^{(n)}$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Positive recurrent \& null recurrent}
+	\begin{definition}
+		State $i$ is \textit{positive recurrent} if $\mu_i < \infty$
+	\end{definition}
+	\begin{definition}
+		State $i$ is \textit{null recurrent} if $\mu_i = \infty$
+	\end{definition}
+	\begin{itemize}
+		\item Both are recurrent states, and are \textit{class properties}, which means that if state $i$ and $j$ communicate, they will share this property.
+		\item If $\mathbb{X}$ is finite, then each recurrent state of $\mathbb{X}$ is positive recurrent.\\
+			Proof stated at page \pageref{finite_pos_rec}.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Example of null recurrent}
+	\begin{example}
+		For a Markov chain with $n$ states ($1,\ldots,n$), if 
+		\[
+		P(X(t+1)=i+1|X(t)=i) = 1-1/n
+		\]
+		and
+		\[
+		P(X(t+1)=1|X(t)=i) = 1/n
+		\]
+		According to geometric distribution (taking $p = 1/n$), the expectation value of ``steps taken for state 1 to come back'' will be $1/p = n$, hence $\lim_{n\to\infty} n = \infty$.
+	\end{example}
+\end{frame}
+
+\begin{frame}{Period of a chain}
+	\begin{definition}
+		The \textit{period} of state $i$ is $d$ if $d$ is the largest integer such that
+		\[
+		P^n_{ii} = 0
+		\]
+		holds for all $n$ which is not divisible by $d$.
+	\end{definition}
+	\begin{definition}
+		If each state of $\mathbb{X}$ has period 1, then $\mathbb{X}$ is called \textit{aperiodic}.
+	\end{definition}
+	\begin{itemize}
+		\item If $P_{ii} > 0$ for all $i \in S$, then $\mathbb{X}$ is aperiodic.
+		\item Period can be seen as the $\gcd$ of all $n$ that have $P^n_{ii} > 0$, note that $P^{\gcd}_{ii} > 0$ is not necessary.
+		\item The period of drunken man problem is 2.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Lemma 1}
+	\begin{lemma}
+		If state $j$ is aperiodic and positive recurrent, then
+		\[
+		\pi_j \equiv \lim_{n \to \infty} P^n_{ij}
+		\]
+		exists and is positive for all states $i \in S$.
+	\end{lemma}
+	\begin{itemize}
+		\item This can be proved by the Blackwell theorem in Renewal theory.
+		\item It doesn't promise that each $\pi_j$ for different $i$ will be the same.
+			But they will be the same if we add the irreducible property.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Property of $\lim$}
+	\begin{itemize}
+		\item The position of $\lim$ cannot be switched arbitrarily in an equation.
+			\begin{example}
+				\[
+				1 = \lim_{n \to \infty}\lim_{m \to \infty} \frac{m}{m+n} \neq
+				\lim_{m \to \infty}\lim_{n \to \infty} \frac{m}{m+n} = 0
+				\]
+			\end{example}
+		\item $\lim$ would not influence the inequality.
+			\begin{example}
+				\begin{center}
+					If $f(n) \geq g(n)$, then
+					$\lim_{n \to \infty} f(n) \geq \lim_{n \to \infty} g(n)$
+				\end{center}
+			\end{example}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Property of $\lim$ (cont.)}
+	\begin{itemize}
+		\item $\lim$ is linear operator under finite number of functions.
+	\end{itemize}
+	\begin{example}
+		For $m < \infty$,
+		\[
+		\sum_{i=1}^m \lim_{n \to \infty} f_i(n) = \lim_{n \to \infty} \sum_{i=1}^m f_i(n)
+		\]
+	\end{example}
+	\begin{itemize}
+		\item It may not work if we push $m$ to $\infty$ first, since $\sum_{i=1}^m f_i(n)$ may influence the result.
+			For example, if $1 \leq i \leq n, f_i(n) = 1/n$, then LHS will be 0, while RHS will be 1.
+			But pushing $m$ to $\infty$ after pushing $n$ to $\infty$ first is OK.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Inequality 1}
+	\begin{ineq}
+		\[
+		\sum_{j \in S} \pi_j \leq 1
+		\]
+	\end{ineq}
+\end{frame}
+
+\begin{frame}
+	\begin{proof}
+		\begin{align*}
+			\lim_{m \to \infty} \sum_{j=1}^m \pi_j &= \lim_{m \to \infty} \sum_{j=1}^m \lim_{n \to \infty} P^n_{ij} \\
+			&= \lim_{m \to \infty} \lim_{n \to \infty} \sum_{j=1}^m P^n_{ij} \\
+			&\leq \lim_{m \to \infty} \lim_{n \to \infty} \sum_{j \in S} P^n_{ij} = 1
+		\end{align*}
+	\end{proof}
+	\begin{itemize}
+		\item The last equation works since $\sum_{j \in S} P^n_{ij} = 1$.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Inequality 2}
+	\begin{ineq}
+		For state $j \in S$, we have
+		\[
+		\pi_j \geq \sum_{i \in S} \pi_i P_{ij}
+		\]
+	\end{ineq}
+\end{frame}
+
+\begin{frame}[shrink]
+	\begin{proof}
+		For $m \geq 1$ and $n \geq 1$,
+		\[
+		P^{n+1}_{ij} = \sum_{k \in S} P^n_{ik} P_{kj} \geq \sum_{k=1}^m P^n_{ik} P_{kj}
+		\]
+		then
+		\begin{align*}
+			\pi_j &= \lim_{n \to \infty} P^{n+1}_{ij} \\
+			&\geq \lim_{n \to \infty} \sum_{k=1}^m P^n_{ik} P_{kj} 
+			 = \sum_{k=1}^m \lim_{n \to \infty} P^n_{ik} P_{kj} 
+			 = \sum_{k=1}^m \pi_k P_{kj}\\
+		\end{align*}
+		hence, we know
+		\[
+		\lim_{m\to\infty} \sum_{k=1}^m \pi_k P_{kj} = \sum_{k \in S} \pi_k P_{kj} \leq \pi_j
+		\]
+	\end{proof}
+\end{frame}
+
+\begin{frame}{Equality 1}
+	\begin{eq}
+		\[
+		\pi_j = \sum_{i \in S} \pi_i P_{ij}
+		\]
+	\end{eq}
+\end{frame}
+
+\begin{frame}
+	\begin{proof}
+		Assume that for some $j \in S$,
+		$\pi_j > \sum_{i \in S} \pi_i P_{ij}$, then
+		\begin{align*}
+			\sum_{j \in S} \pi_j &> \sum_{j \in S}\sum_{i \in S} \pi_i P_{ij} \\
+			&= \sum_{i \in S} \pi_i \sum_{j \in S} P_{ij} = \sum_{i \in S} \pi_i
+		\end{align*}
+		Since a value cannot be greater than itself, we got contradiction.
+	\end{proof}
+	\begin{itemize}
+		\item $\sum$ should be represented by $\lim \sum$, the equation will still work.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Proof of theorem 1}
+	\begin{itemize}
+		\item \textbf{Step 0}: existence of limiting probability.
+		\item \textbf{Step 1}: existence of stationary probability distribution.
+		\item \textbf{Step 2}: uniqueness.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{0. Existence of limiting probability}
+	\begin{proof}
+		By lemma 1, we know that there exists a $\pi_j$ for row $i$.
+		Since the Markov chain is irreducible and all the states are positive recurrent, 
+		for any state $i'$ other than $i$, we know that $i'$ surely will visit $i$ in finite steps.
+		Therefore, the $\pi_j$ value at row $i'$ will equal to the $\pi_j$ value at row $i$,
+		which means that all the $\pi_j$ for column $j$ are the same, and is the limiting probability.
+	\end{proof}
+	\textcolor{red}{TODO: refine, check email}
+\end{frame}
+
+\begin{frame}{1. Existence of stationary probability distribution}
+	We want to prove that
+	\begin{target}
+		There's a vector $s = (s_1, s_2, \ldots)$ such that
+		\begin{enumerate}
+			\item $\sum_{i \in S} s_i = 1$
+			\item $s \times P = s$
+		\end{enumerate}
+	\end{target}
+\end{frame}
+
+\begin{frame}
+	\begin{proof}
+		By lemma 1, we know that there exists a $\pi = (\pi_1, \pi_2, \ldots)$. \\
+		And by equality 1, we know that
+		\[
+		(\pi_1, \pi_2, \ldots) \times P = (\pi_1, \pi_2, \ldots)
+		\]
+		Hence $\pi$ can satisfy the 2nd part of our target. \\
+		Then, we take $k = \sum_{i \in S} \pi_i$.
+		By inequality 1, we know that $k < \infty$, and can get
+		\[
+		(\frac{\pi_1}{k}, \frac{\pi_2}{k}, \ldots) \times P = (\frac{\pi_1}{k}, \frac{\pi_2}{k}, \ldots)
+		\]
+		where $\sum_{i \in S} \frac{\pi_i}{k} = 1$ also satisfy the 1st part of our target. \\
+		Therefore, this vector can be $s$, which means that it exists.
+	\end{proof}
+\end{frame}
+
+\begin{frame}{2. Uniqueness}
+	\begin{target}
+		If $s = (s_1, s_2, \ldots)$ is a stationary distribution of $\mathbb{X}$, then $s = \pi$.
+	\end{target}
+	\begin{itemize}
+		\item We'll prove this by inequality 3 \& 4.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Inequality 3}
+	\begin{ineq}
+		\[
+		s_j \geq \pi_j, \forall j \in S
+		\]
+	\end{ineq}
+\end{frame}
+
+\begin{frame}
+	\begin{proof}
+		Let the distribution of $X(0)$ be $s$, by the property of stationary distribution, we have
+		\begin{align*}
+			             s_j &= P(X(n)=j) = \sum_{i \in S} P(X(n) = j | X(0) = i)P(X(0) = i) \\
+			                 &= \sum_{i \in S} P^n_{ij} \cdot s_i \\
+			                 &\geq \sum_{i=1}^m P^n_{ij} \cdot s_i \\
+			\Rightarrow  s_j &= \lim_{m \to \infty}\lim_{n \to \infty} s_j \\
+			                 &\geq \lim_{m \to \infty}\lim_{n \to \infty} \sum_{i=1}^m P^n_{ij} \cdot s_i
+			                  = \lim_{m \to \infty}\sum_{i=1}^m \pi_j \cdot s_i = \pi_j
+		\end{align*}
+	\end{proof}
+\end{frame}
+
+\begin{frame}{Inequality 4}
+	\begin{ineq}
+		\[
+		s_j \leq \pi_j, \forall j \in S
+		\]
+	\end{ineq}
+\end{frame}
+
+\begin{frame}
+	\begin{proof}
+		Similar in the proof above, $\forall m,n \geq 1$, we have
+		\begin{align*}
+			            s_j &= \sum_{i \in S} P^n_{ij} \cdot s_i \\
+			                &\leq \sum_{i=1}^m P^n_{ij} \cdot s_i + \sum_{i=m+1}^\infty s_i \\
+			\Rightarrow s_j &= \lim_{m \to \infty}\lim_{n \to \infty} s_j \\
+			                &\leq \lim_{m \to \infty}\lim_{n \to \infty} \left( 
+			                	\sum_{i=1}^m P^n_{ij} \cdot s_i + \sum_{i=m+1}^\infty s_i \right) \\
+			                &= \pi_j
+		\end{align*}
+	\end{proof}
+\end{frame}
+
+\begin{frame}{An example Markov chain}
+	\begin{example}
+		\[
+		P = 
+		\begin{pmatrix}
+			\alpha & 1 - \alpha \\
+			\beta  & 1 - \beta
+		\end{pmatrix},
+		0 < \alpha, \beta < 1
+		\]
+		\[
+		\pi = \left( \frac{\beta}{1+\beta-\alpha}, \frac{1-\alpha}{1+\beta-\alpha} \right) 
+		\]
+	\end{example}
+\end{frame}
+
+\begin{frame}{Real world example: Hardy-Weinberg Law}
+	\begin{example}
+		There're two kinds of allele: 
+		\begin{itemize}
+			\item dominant: \textbf{A}
+			\item recessive: \textbf{a}
+		\end{itemize}
+		And three kinds of senotype with population proportion as follow:
+		\begin{itemize}
+			\item AA: $p$
+			\item aa: $q$
+			\item Aa: $r = 1 - (p + q)$
+		\end{itemize}
+	\end{example}
+\end{frame}
+
+\begin{frame}
+	\begin{example}[cont.]
+		\[
+		P = 
+		\bordermatrix{ ~ & AA                      & aa                      & Aa            \cr
+			            AA & p+\frac{r}{2}           & 0                       & q+\frac{r}{2} \cr
+			            aa & 0                       & q+\frac{r}{2}           & p+\frac{r}{2} \cr
+			            Aa & \frac{p}{2}+\frac{r}{4} & \frac{p}{2}+\frac{r}{4} & \frac{p+q+r}{2} \cr}
+		\]
+		we get $\pi = (p, q, r)$ when
+		\begin{itemize}
+			\item $p = {\left( p + \frac{r}{2} \right)}^2$
+			\item $q = {\left( q + \frac{r}{2} \right)}^2$
+			\item $r = 2 \left( p + \frac{r}{2} \right)\left( q + \frac{r}{2} \right)$
+		\end{itemize}
+	\end{example}
+\end{frame}
+
+\begin{frame}{Long-run proportion}
+	\begin{definition}
+		We say that $r_j$ is the \textit{long-run proportion} of state $j \in S$ if
+		\[
+		r_j = \lim_{n\to\infty} \frac{1}{n} \sum_{1 \leq t \leq n} P^t_{ij}
+		\]
+		holds for each state $i \in S$.
+	\end{definition}
+	\begin{itemize}
+		\item It represents the average appearance times of state $j$ in the whole process.
+		\item We will show that (in theorem 3) if $\mathbb{X}$ is irreducible, then the long-run proportion of all states exist.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Theorem 2}
+	\begin{theorem}[type 1]
+	If $r_j$ exists for each $j \in S$ and $\sum_{j \in S} r_j > 0$,
+	then $r = (r_1, r_2, \ldots)$ is the unique stationary distribution of $\mathbb{X}$.
+	\end{theorem}
+	or
+	\begin{theorem}[type 2]
+	If $r_j$ exists for each $j \in S$ and \textbf{a stationary distribution exists},
+	then $r = (r_1, r_2, \ldots)$ is the unique stationary distribution of $\mathbb{X}$.
+	\end{theorem}
+\end{frame}
+
+\begin{frame}[shrink]{Proof}
+	\textbf{Existence of stationary distribution in type 1:} \\
+	Let 
+	\[
+	R = 
+	\begin{pmatrix}
+		r \\
+		r \\
+		\vdots
+	\end{pmatrix} 
+	= \lim_{n\to\infty} \frac{1}{n} \sum_{1 \leq t \leq n} P^t
+	\]
+	then
+	\begin{align*}
+		R \times P &= \lim_{n\to\infty} \frac{1}{n} \sum_{1 \leq t \leq n} P^{t+1} \\
+		&= \lim_{n\to\infty} \frac{1}{n} \sum_{1 \leq t \leq n} P^t + \lim_{n\to\infty} \frac{1}{n}(P^{n+1} - P) \\
+		&= R
+	\end{align*}
+	As stated later, $\sum_{j \in S} r_j \leq 1$, hence by normalizing $r$, we prove that stationary distribution exist.
+	\begin{itemize}
+	\item \textcolor{red}{$(\lim f(n))\cdot g(n) = \lim f(n) \cdot g(n)$?}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+	\textbf{Uniqueness:} \\
+	Let $\pi$ be an arbitrary stationary distribution, then
+	\begin{align*}
+	r &= \pi \times R \\
+	&= \pi \times \lim_{n\to\infty} \frac{1}{n} \sum_{1 \leq t \leq n} P^t \\
+	&= \lim_{n\to\infty} \frac{1}{n} \sum_{1 \leq t \leq n} \pi \times P^t \\
+	&= \lim_{n\to\infty} \frac{1}{n} \sum_{1 \leq t \leq n} \pi \\
+	&= \pi
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Proof (cont.)}\label{proportion_sum}
+	\textbf{Prove that $\sum_{j \in S} r_j \leq 1$:}\\
+	\begin{align*}
+	\sum_{j \in S} r_j & = 
+	\lim_{m\to\infty} \sum_{j=1}^m \lim_{n\to\infty} \frac{1}{n} \sum_{t=1}^n P^t_{ij} \\
+	& = \lim_{m\to\infty} \lim_{n\to\infty} \frac{1}{n}\sum_{t=1}^n \sum_{j=1}^m P^t_{ij} \\
+	& \leq \lim_{m\to\infty} \lim_{n\to\infty} \frac{1}{n}\sum_{t=1}^n \sum_{j\in S} P^t_{ij} \\
+	& = \lim_{m\to\infty} \lim_{n\to\infty} \frac{1}{n}\sum_{t=1}^n 1 = 1
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Example 1}
+	On a highway, if we know the probability that
+	\begin{itemize}
+	\item A truck is followed by a truck: $1/4$
+	\item A truck is followed by a car: $3/4$
+	\item A car is followed by a truck: $1/5$
+	\item A car is followed by a car: $4/5$
+	\end{itemize}
+	We can construct a matrix
+	\[
+	\bordermatrix{~ & T   & C   \cr
+                  T & 1/4 & 3/4 \cr
+                  C & 1/5 & 4/5 \cr}
+	\]
+	and get the portion of trucks and cars on the whole highway as the eigenvector $(4/19, 15/19)$
+	(we will know that long-run proportion exists by Theorem 3).
+\end{frame}
+
+\begin{frame}{Example 2}
+	For a system which has several good and bad states, we have a matrix $P$:
+	\[
+	\bordermatrix{~      & g_1 & g_2 & \cdots & b_1 & b_2 & \cdots \cr
+                  g_1    &     &     &        &     &     &        \cr
+                  g_2    &     &     &        &     &     &        \cr
+                  \vdots &     &     &        &     &     &        \cr
+                  b_1    &     &     &        &     &     &        \cr
+                  b_2    &     &     &        &     &     &        \cr
+                  \vdots &     &     &        &     &     &        \cr}
+	\]
+\end{frame}
+
+\begin{frame}{Example 2 (cont.)}
+	\textbf{Q1:} Breakdown rate (breakdown times $/$ total time)\\
+	The long-run frequency of going to a bad state from a good state is
+	\[
+	\sum_{i \in g} \sum_{j \in b} r_i P_{ij}
+	\]
+\end{frame}
+
+\begin{frame}{Example 2 (cont.)}
+	\textbf{Q2:} The expected time $\mu_G$ (resp. $\mu_B$) of staying in good (resp. bad) states once we reach a good (resp. bad) state? \\
+	\textbf{Ans:} \\
+	For each $t = 1, 2, \ldots$, let $G_t$ (resp. $B_t$) be the length of the $t$-th good (resp. bad) phase of consecutive good (resp. bad) states.
+	By the strong law of large numbers, 
+	\[
+	P\left( \lim_{t\to\infty} \frac{G_1 + B_1 + G_2 + B_2 + \cdots + G_t + B_t}{t} = \mu_G + \mu_B \right) = 1
+	\]
+	Since the reciprocal of above is the breakdown rate, we get equation (1):
+	\[
+	P\left( \sum_{i \in G} \sum_{j \in B} \pi_i P_{ij} = \frac{1}{\mu_G + \mu_B} \right) = 1
+	\]
+\end{frame}
+
+\begin{frame}{Example 2 (cont.)}
+	Also, with probability 1, we get equation (2):
+	\[
+	P\left( \sum_{i \in G} r_i = 
+	\lim_{t\to\infty}\frac{G_1 + G_2 + \cdots + G_t}{G_1 + B_1 + \cdots + G_t + B_t}
+	= \frac{\mu_G}{\mu_G + \mu_B} \right) = 1
+	\]
+	Then, by $(2)/(1)$, we get that
+	\[
+	P\left( \mu_G = \frac{\sum_{i \in G} r_i}{\sum_{i \in G}\sum_{j \in B} r_i P_{ij}} \right) = 1
+	\]
+	\begin{itemize}
+	\item \textcolor{red}{$\lim \frac{f(n)}{g(n)} = \frac{\lim f(n)}{\lim g(n)}$?}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Theorem 3}
+	\begin{theorem}
+	If $\mathbb{X}$ is irreducible, then the long-run proportion $r_i$ exists with probability 1, moreover,
+	\begin{enumerate}
+	\item If state $i$ is positive recurrent (i.e. $0 < \mu_i < \infty$), then $P(r_i = \frac{1}{\mu_i}) = 1$.
+	\item If state $i$ is null recurrent (i.e. $\mu_i = \infty$) or transient, then $P(r_i = 0) = 1$.
+	\end{enumerate}
+	\end{theorem}
+\end{frame}
+
+\begin{frame}{Proof}
+	\textbf{Part 1:} \\
+	Suppose $X(0) = i$, $T_k$ is the number of steps required for the $k$-th $i$ goes to $(k+1)$-st $i$,
+	then by the strong law of large number,
+	\begin{align*}
+	&P\left( \lim_{k\to\infty} \frac{T_1 + T_2 + \cdots + T_k}{k} = \mu_i \right) = 1 \\
+	\Rightarrow & P\left( r_i = \lim_{k\to\infty} \frac{k}{T_1 + T_2 + \cdots + T_k} = \frac{1}{\mu_i} \right) = 1
+	\end{align*}
+	\begin{itemize}
+	\item \textcolor{red}{$\lim (A/B) = \frac{1}{\lim (B/A)}$?}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+	\textbf{Part 2:} \\
+	\begin{enumerate}
+	\item If $i$ is transient, $i$ will only appear finite times in the long-run, hence
+		\[
+		r_i = \frac{finite}{\infty} = 0
+		\]
+	\item If $i$ is null recurrent, $\mu_i$ is $\infty$, then
+		\[
+		P\left( \lim_{k\to\infty} \frac{T_1 + T_2 + \cdots + T_k}{k} = \infty \right) = 1
+		\]
+		\[
+		P\left( r_i = \lim_{k\to\infty} \frac{k}{T_1 + T_2 + \cdots + T_k} = 0 \right) = 1
+		\]
+		(The first equation is not promised by the strong law of large number.
+		But if it's not $\infty$, we can say that $\mu_i$ is not $\infty$, which is a contradiction.)
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}{Example 1}\label{finite_pos_rec}
+	\begin{example}[type 1]
+	If $\mathbb{X}$ is \textbf{irreducible} and finite, then $\mathbb{X}$ has no null recurrent states.
+	\end{example}
+	\begin{example}[type 2]
+	If $\mathbb{X}$ is finite, then $\mathbb{X}$ has no null recurrent states.
+	\end{example}
+	\begin{itemize}
+	\item Finite irreducible imply positive recurrent.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Proof}
+	\begin{itemize}
+	\item \textbf{Type 1:}\\
+		If there's a state which is null recurrent, by irreducible, all the states will be null recurrent.
+		Then, all states have $P(r_i = 0) = 1$.
+		By changing the proof in page \pageref{proportion_sum} into finite states version, 
+		we know that $\sum r_i = 1$.
+		So it's impossible for finite $r_i$, which are all close to 0, to sum up to 1.
+	\item \textbf{Type 2:}\\
+		If it's not irreducible, the finite set of communicated null recurrent states still form an irreducible and finite Markov chain, which can fit the requirement of type 1.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Example 2}
+	\begin{example}
+	For an irreducible Markov chain $\mathbb{X}$ with infinite states, no state will be positive recurrent.
+	\end{example}
+	\begin{itemize}
+	\item Infinite irreducible imply no positive recurrent.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Proof}
+	If all the states are positive recurrent, then by theorem 3, 
+	we know that all the $r_i > 0$ and is a finite value.
+	We then set $r_\text{min} = \epsilon\cdot \min (r_1, r_2, \ldots)$ ($0 < \epsilon < 1$) such that 
+	$r_i > r_\text{min} > 0, \forall i$.
+	And get
+	\[
+	\sum_{i\in S} r_i > \sum_{i\in S} r_\text{min} = \infty > 1
+	\]
+	which is contradiction to \hyperlink{proportion_sum}{page \pageref{proportion_sum}}.
+\end{frame}
+
+\begin{frame}{Example 3: Grand Hotel}
+	\begin{example}
+	There's a hotel, with $N$ representing the number of newly occupied rooms each day ($N$ is a poisson distribution with parameter $\lambda$).
+	And the number of consecutive check-in days of each room is a geometric distribution with probability $p$ ($p$ is the probability of check-out).
+	$X(t)$ is the number of occupied rooms in day $t$.
+	\end{example}
+\end{frame}
+
+\begin{frame}{\textbf{Q1:} $P_{ij} = $?}
+	We set $R_i$ as a binomial distribution with parameter $(i, 1-p)$, which represents the number of rooms which will remain occupied in the next day, then
+	\begin{align*}
+	P_{ij} & = P(R_i + N = j) \\
+	& = \sum_{k\geq 0} P(R_i + N = j | R_i = k)P(R_i = k) \\
+	& = \sum_{k\geq 0} P(N = j-k)P(R_i = k) \\
+	& = \sum_{0 \leq k \leq \min(i,j)} \frac{e^{-\lambda}\cdot \lambda^{j-k}}{(j-k)!} \binom{i}{k} (1-p)^k p^{1-k}
+	\end{align*}
+\end{frame}
+
+\begin{frame}{\textbf{Q2:} $r_i =$?}
+	We guess there's a stationary distribution which is a poisson distribution with parameter $\lambda_0$.
+	Setting $X(0)$ with this distribution. 
+	And let $R$ as the number of rooms in $X(0)$ which remain check-in in the next day ($R$ is a poisson distribution with parameter $\lambda_0 (1-p)$).
+	$X(1)$ will have distribution $R + N$, which is a poisson distribution with parameter $\lambda_0 (1-p) + \lambda$.
+	Then since $X(0)$ is a stationary distribution, it will have the same distribution with $X(1)$, which means that $\lambda_0 = \lambda_0 (1-p) + \lambda$, and we get $\lambda_0 = \lambda / p$.
+\end{frame}
+
+\end{document}
