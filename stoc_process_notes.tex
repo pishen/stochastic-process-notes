@@ -189,11 +189,12 @@
 		\sum_{i=1}^m \lim_{n \to \infty} f_i(n) = \lim_{n \to \infty} \sum_{i=1}^m f_i(n)
 		\]
 	\end{example}
-	\begin{itemize}
-		\item It may not work if we push $m$ to $\infty$ first, since $\sum_{i=1}^m f_i(n)$ may influence the result.
-			For example, if $1 \leq i \leq n, f_i(n) = 1/n$, then LHS will be 0, while RHS will be 1.
-			But pushing $m$ to $\infty$ after pushing $n$ to $\infty$ first is OK.
-	\end{itemize}
+	\textcolor{red}{need an example of $m = \infty$}
+%	\begin{itemize}
+%		\item It may not work if we push $m$ to $\infty$ first, since $\sum_{i=1}^m f_i(n)$ may influence the result.
+%			For example, if $1 \leq i \leq n, f_i(n) = 1/n$, then LHS will be 0, while RHS will be 1.
+%			But pushing $m$ to $\infty$ after pushing $n$ to $\infty$ first is OK.
+%	\end{itemize}
 \end{frame}
 
 \begin{frame}{Inequality 1}
@@ -285,7 +286,7 @@
 		Therefore, the $\pi_j$ value at row $i'$ will equal to the $\pi_j$ value at row $i$,
 		which means that all the $\pi_j$ for column $j$ are the same, and is the limiting probability.
 	\end{proof}
-	\textcolor{red}{TODO: refine, check email}
+	\textcolor{red}{still not clear enough}
 \end{frame}
 
 \begin{frame}{1. Existence of stationary probability distribution}
@@ -669,7 +670,7 @@
 \end{frame}
 
 \begin{frame}{\textbf{Q2:} $r_i =$?}
-	We guess there's a stationary distribution which is a poisson distribution with parameter $\lambda_0$.
+	We guess (by a dream?) there's a stationary distribution which is a poisson distribution with parameter $\lambda_0$.
 	Setting $X(0)$ with this distribution. 
 	And let $R$ as the number of rooms in $X(0)$ which remain check-in in the next day ($R$ is a poisson distribution with parameter $\lambda_0 (1-p)$).
 	$X(1)$ will have distribution $R + N$, which is a poisson distribution with parameter $\lambda_0 (1-p) + \lambda$.
