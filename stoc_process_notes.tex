@@ -632,21 +632,23 @@
 
 \begin{frame}{Example 2}
 	\begin{example}
-	For an irreducible Markov chain $\mathbb{X}$ with infinite states, no state will be positive recurrent.
+	In the drunken man problem with infinite states, no state will be positive recurrent.
 	\end{example}
 	\begin{itemize}
-	\item Infinite irreducible imply no positive recurrent.
+	\item Infinite drunken man imply no positive recurrent.
+		Note that it doesn't mean all infinite irreducible Markov chain has no positive recurrent state.
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Proof}
 	If all the states are positive recurrent, then by theorem 3, 
 	we know that all the $r_i > 0$ and is a finite value.
-	We then set $r_\text{min} = \epsilon\cdot \min (r_1, r_2, \ldots)$ ($0 < \epsilon < 1$) such that 
-	$r_i > r_\text{min} > 0, \forall i$.
+	Since each state of drunken man problem has the same structure, all the $r_i$ has same value.
+	We then set $r = \epsilon\cdot \min (r_1, r_2, \ldots)$ ($0 < \epsilon < 1$) such that 
+	$r_i > r > 0, \forall i$.
 	And get
 	\[
-	\sum_{i\in S} r_i > \sum_{i\in S} r_\text{min} = \infty > 1
+	\sum_{i\in S} r_i > \sum_{i\in S} r = \infty > 1
 	\]
 	which is contradiction to \hyperlink{proportion_sum}{page \pageref{proportion_sum}}.
 \end{frame}
