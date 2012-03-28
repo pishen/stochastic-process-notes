@@ -25,10 +25,100 @@ LeoSW, windker
 \end{center}
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Recurrent \& transient}
+	\begin{definition}
+	The \textit{recurrent probability} of state $i$ of Markov chain $\mathbb{X}$ is 
+	\[
+	f_i = P(\text{there exists an index}~t \geq 1~\text{with}~X(t)=i | X(0)=i)
+	\]
+	\begin{itemize}
+	\item State $i$ of $\mathbb{X}$ is \textit{recurrent} if $f_i = 1$.
+	\item State $i$ of $\mathbb{X}$ is \textit{transient} if $f_i < 1$.
+	\end{itemize}
+	\end{definition}
+\end{frame}
+
+\begin{frame}{Recurrent \& transient (cont.)}
+	\begin{itemize}
+	\item If state $i$ is recurrent, by the property of Markov chain, 
+		once it reenter the state $i$, we can take it as starting from $X(0)$ again. \\
+		Hence we know that it will keep reentering the state $i$ again and again in the process.
+	\item If state $i$ is transient, in each period it start going from $i$,
+		it may have probability $1 - f_i$ that it won't come back anymore. \\
+		Hence the probability that the process will be in state i for exactly $n$ periods equals
+		${f_i}^{n-1}(1-f_i), ~n \geq 1$, which is a geometric distribution.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Recurrent \& transient (cont.)}
+	\begin{itemize}
+	\item From the preceding page, it follows that state $i$ is recurrent if and only if,
+		starting in state $i$, the expected number of steps that the process is in state $i$ is infinite.
+	\item We can also derive that, if the Markov chain has finite states, at least one state is recurrent.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Expected number of visits}
+	Let 
+	\[
+	I(n) = \left\{
+	\begin{array}{l l}
+		1 & ~\text{if $X(n) = i$}\\
+		0 & ~\text{if $X(n) \neq i$} \\
+	\end{array} \right.
+	\]
+	we have $\sum_{n=0}^\infty I(n)$ represents the number of steps that the process is in state $i$, and
+	\begin{align*}
+	E\left[ \sum_{n=0}^\infty I(n)|X(0) = i \right] & = \sum_{n=0}^\infty E[I(n)|X(0)=i] \\
+	& = \sum_{n=0}^\infty P(I(n)=i|X(0)=i) \\
+	& = \sum_{n=0}^\infty P^n_{ii}
+	\end{align*}
+\end{frame}
+
+\begin{frame}{Lemma 1}
+	From the above statements, we prove the following
+	\begin{lemma}
+	State $i$ is 
+	\[
+	\text{recurrent if } \sum_{n=0}^\infty P^n_{ii} = \infty \text{,}
+	\]
+	\[
+	\text{transient if } \sum_{n=0}^\infty P^n_{ii} < \infty
+	\]
+	\end{lemma}
+\end{frame}
+
+\begin{frame}{Communicated states}
+	\begin{definition}
+	State $i$ and $j$ \textit{communicate}, denoted $i \leftrightarrow j$,
+	if there exist integers $m \geq 0$ and $n \geq 0$ such that
+	\[
+	P^m_{ij} > 0 \text{ and } P^n_{ji} > 0
+	\]
+	\end{definition}
+\end{frame}
+
+\begin{frame}{Lemma 2}
+	\begin{lemma}
+	If $i \leftrightarrow j$, then the following statements hold.
+	\begin{itemize}
+	\item State $i$ is recurrent if and only if state $j$ is recurrent.
+	\item State $i$ is transient if and only if state $j$ is transient.
+	\end{itemize}
+	\end{lemma}
+\end{frame}
+
+\begin{frame}{Infinite drunken man problem}
 	\begin{center}
-		{\Huge Limiting Probabilities}
+	\includegraphics[width=0.6\textwidth]{infinite_drunken}
 	\end{center}
+	Let the state space consist of all integers.
+	Let $X(0) = 0$ (i.e. at time 0 the drunken man is in state 0).
+	The transition probabilities are such that
+	\[
+	P_{i(i+1)} = P_{i(i-1)} = 0.5
+	\]
+	holds for all states $i$ of $\mathbb{X}$.
 \end{frame}
 
 \begin{frame}{Outline}
