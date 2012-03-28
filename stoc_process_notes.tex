@@ -108,6 +108,18 @@ LeoSW, windker
 	\end{lemma}
 \end{frame}
 
+\begin{frame}{Proof}
+	Let $m$ and $n$ be nonnegative integers with $P^m_{ij} \cdot P^n_{ji} > 0$.
+	Suppose that state $j$ is recurrent, i.e., $\sum_{t=0}^\infty P^t_{jj} = \infty$.
+	We have
+	\begin{align*}
+	\sum_{t=0}^\infty P^t_{ii} & \geq \sum_{t=0}^\infty P^{m+t+n}_{ii} \\
+	& \geq \sum_{t=0}^\infty P^m_{ij} \cdot P^t_{jj} \cdot P^n_{ji} \\
+	& = P^m_{ij} \cdot P^n_{ji} \cdot \sum_{t=0}^\infty P^t_{jj} = \infty
+	\end{align*}
+	Thus, state $i$ is also recurrent.
+\end{frame}
+
 \begin{frame}{Infinite drunken man problem}
 	\begin{center}
 	\includegraphics[width=0.6\textwidth]{infinite_drunken}
