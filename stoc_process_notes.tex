@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{amsfonts}
+\usepackage{graphicx}
 \newtheorem{ineq}{Inequality}
 \newtheorem{eq}{Equality}
 \newtheorem{target}{Target}
@@ -41,8 +42,8 @@ LeoSW, windker
 \begin{frame}{Recurrent \& transient (cont.)}
 	\begin{itemize}
 	\item If state $i$ is recurrent, by the property of Markov chain, 
-		once it reenter the state $i$, we can take it as starting from $X(0)$ again. \\
-		Hence we know that it will keep reentering the state $i$ again and again in the process.
+		once it re-enter the state $i$, we can take it as starting from $X(0)$ again. \\
+		Hence we know that it will keep re-entering the state $i$ again and again in the process.
 	\item If state $i$ is transient, in each period it start going from $i$,
 		it may have probability $1 - f_i$ that it won't come back anymore. \\
 		Hence the probability that the process will be in state i for exactly $n$ periods equals
@@ -70,7 +71,7 @@ LeoSW, windker
 	we have $\sum_{n=0}^\infty I(n)$ represents the number of steps that the process is in state $i$, and
 	\begin{align*}
 	E\left[ \sum_{n=0}^\infty I(n)|X(0) = i \right] & = \sum_{n=0}^\infty E[I(n)|X(0)=i] \\
-	& = \sum_{n=0}^\infty P(I(n)=i|X(0)=i) \\
+	& = \sum_{n=0}^\infty 1 \cdot P(X(n)=i|X(0)=i) \\
 	& = \sum_{n=0}^\infty P^n_{ii}
 	\end{align*}
 \end{frame}
@@ -80,10 +81,10 @@ LeoSW, windker
 	\begin{lemma}
 	State $i$ is 
 	\[
-	\text{recurrent if } \sum_{n=0}^\infty P^n_{ii} = \infty \text{,}
+	\text{recurrent } \iff \sum_{n=0}^\infty P^n_{ii} = \infty \text{,}
 	\]
 	\[
-	\text{transient if } \sum_{n=0}^\infty P^n_{ii} < \infty
+	\text{transient } \iff \sum_{n=0}^\infty P^n_{ii} < \infty
 	\]
 	\end{lemma}
 \end{frame}
@@ -122,7 +123,7 @@ LeoSW, windker
 
 \begin{frame}{Infinite drunken man problem}
 	\begin{center}
-	\includegraphics[width=0.6\textwidth]{infinite_drunken}
+	\includegraphics[width=0.6\textwidth]{infinite_drunken.eps}
 	\end{center}
 	Let the state space consist of all integers.
 	Let $X(0) = 0$ (i.e. at time 0 the drunken man is in state 0).
