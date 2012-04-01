@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[mathserif]{beamer}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -762,7 +762,7 @@ LeoSW, windker
 	which is contradiction to \hyperlink{proportion_sum}{page \pageref{proportion_sum}}.
 \end{frame}
 
-\begin{frame}{Example 3: Grand Hotel}
+\begin{frame}{Example 3: Poisson Hotel}
 	\begin{example}
 	There's a hotel, with $N$ representing the number of newly occupied rooms each day ($N$ is a poisson distribution with parameter $\lambda$).
 	And the number of consecutive check-in days of each room is a geometric distribution with probability $p$ ($p$ is the probability of check-out).
@@ -786,6 +786,51 @@ LeoSW, windker
 	And let $R$ as the number of rooms in $X(0)$ which remain check-in in the next day ($R$ is a poisson distribution with parameter $\lambda_0 (1-p)$).
 	$X(1)$ will have distribution $R + N$, which is a poisson distribution with parameter $\lambda_0 (1-p) + \lambda$.
 	Then since $X(0)$ is a stationary distribution, it will have the same distribution with $X(1)$, which means that $\lambda_0 = \lambda_0 (1-p) + \lambda$, and we get $\lambda_0 = \lambda / p$.
+	
+	After getting $r_i$, we get that with probability 1, 
+	\[
+	\mu_i = \frac{1}{P(X(0)=i)} = \frac{i!}{e^{-\lambda/p}\cdot (\lambda/p)^i}
+	\]
+	\textcolor{red}{need clean up}
+\end{frame}
+
+\begin{frame}{Corollary of theorem 2 \& 3}
+\begin{corollary}
+If $\mathbb{X}$ is irreducible, then
+\[
+\text{$\mathbb{X}$ is positive recurrent $\iff \mathbb{X}$ admits a stationary distribution.}
+\]
+\end{corollary}
+\end{frame}
+
+\begin{frame}{Two definitions}
+Both $i$ and $j$ below are transient states.
+
+\begin{itemize}
+\item Expected steps in a transient state:
+\end{itemize}
+\begin{definition}
+$s_{ij}$ is the expected number of steps with $X(t) = j$ when $X(0)=i$.
+\end{definition}
+
+\begin{itemize}
+\item Probability of reaching a transient state:
+\end{itemize}
+\begin{definition}
+\[
+f_{ij} = P(X(t)=j \text{ for some } t \geq 1 | X(0)=i)
+\]
+\end{definition}
+\end{frame}
+
+\begin{frame}{Computing $s_{ij}$}
+\begin{theorem}
+Let $T$ consists of the transient states of $\mathbb{X}$, suppose that $|T|<\infty$.
+\[
+s_{ij} = (I - P_T)^{-1}_{ij}
+\]
+where $I$
+\end{theorem}
 \end{frame}
 
 \end{document}
