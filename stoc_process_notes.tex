@@ -74,6 +74,7 @@ LeoSW, windker
 	& = \sum_{n=0}^\infty 1 \cdot P(X(n)=i|X(0)=i) \\
 	& = \sum_{n=0}^\infty P^n_{ii}
 	\end{align*}
+	We set $T = \sum_{n=0}^\infty I(n)$
 \end{frame}
 
 \begin{frame}{Lemma 1}
@@ -87,6 +88,16 @@ LeoSW, windker
 	\text{transient } \iff \sum_{n=0}^\infty P^n_{ii} < \infty
 	\]
 	\end{lemma}
+\end{frame}
+
+\begin{frame}{Proof of Lemma 1}
+	($\Rightarrow$:)\\
+	($\Leftarrow$:)\\
+	Suppose state i is transient($f_i < 1$), consider $P(T=k) = f_i^{k-1} \cdot (1-f_i)$. Since T is a geometric distribution, we have
+	\begin{align*}
+		E[T] 	&= \sum_{k = 0}^\infty k \cdot f_i^{k-1} \cdot f_i \\
+			&=\frac{1}{1-f_i} < \infty
+	\end{align*}
 \end{frame}
 
 \begin{frame}{Communicated states}
@@ -829,7 +840,7 @@ Let $T$ consists of the transient states of $\mathbb{X}$, suppose that $|T|<\inf
 \[
 s_{ij} = (I - P_T)^{-1}_{ij}
 \]
-where $I$
+where $I$ is an identity matrix.
 \end{theorem}
 \end{frame}
 
