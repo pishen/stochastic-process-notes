@@ -10,6 +10,7 @@
 \usetheme{Berlin}
 \useoutertheme{infolines}
 \setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{theorems}[numbered]
 \title[Stochastic Process]{Lecture notes of Stochastic Process}
 \subtitle{lectured by prof. Hsueh-I Lu}
 \author{pishen}
@@ -814,34 +815,44 @@ If $\mathbb{X}$ is irreducible, then
 \end{corollary}
 \end{frame}
 
-\begin{frame}{Two definitions}
-Both $i$ and $j$ below are transient states.
-
-\begin{itemize}
+\begin{frame}{Moving to transient states}
+For transient states $i$ and $j$, we define the following:
+\begin{enumerate}
 \item Expected steps in a transient state:
-\end{itemize}
-\begin{definition}
-$s_{ij}$ is the expected number of steps with $X(t) = j$ when $X(0)=i$.
-\end{definition}
-
-\begin{itemize}
+	\begin{definition}
+	\begin{center}
+	$s_{ij}$ is the expected number of steps with $X(t) = j$ when $X(0)=i$.
+	\end{center}
+	\end{definition}
 \item Probability of reaching a transient state:
-\end{itemize}
-\begin{definition}
-\[
-f_{ij} = P(X(t)=j \text{ for some } t \geq 1 | X(0)=i)
-\]
-\end{definition}
+	\begin{definition}
+	\[
+	f_{ij} = P(X(t)=j \text{ for some } t \geq 1 | X(0)=i)
+	\]
+	\end{definition}
+\end{enumerate}
 \end{frame}
 
-\begin{frame}{Computing $s_{ij}$}
+\begin{frame}{Computing $s_{ij}$ \& $f_{ij}$}
 \begin{theorem}
-Let $T$ consists of the transient states of $\mathbb{X}$, suppose that $|T|<\infty$.
+For a Markov chain $\mathbb{X}$ consisting finite transient states,
 \[
-s_{ij} = (I - P_T)^{-1}_{ij}
+s_{ij} = (I - T)^{-1}_{ij}
 \]
-where $I$ is an identity matrix.
+where $I$ is an identity matrix, $T$ is the induced matrix of $P$ by all the transient states in $P$.
+Moreover,
+\[
+f_{ij} = \frac{s_{ij} - \delta_{ij}}{s_{jj}} ~\text{,where}~ \delta_{ij}=
+\begin{cases}
+1 & \text{if } i=j \\
+0 & \text{if } i \neq j
+\end{cases}
+\]
 \end{theorem}
+\end{frame}
+
+\begin{frame}{Proof}
+
 \end{frame}
 
 \end{document}
