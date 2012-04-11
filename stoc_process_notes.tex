@@ -4,6 +4,7 @@
 \usepackage{lmodern}
 \usepackage{amsfonts}
 \usepackage{graphicx}
+%\usepackage{mathtools}
 \newtheorem{ineq}{Inequality}
 \newtheorem{eq}{Equality}
 \newtheorem{target}{Target}
@@ -820,29 +821,28 @@ For transient states $i$ and $j$, we define the following:
 \begin{enumerate}
 \item Expected steps in a transient state:
 	\begin{definition}
-	\begin{center}
-	$s_{ij}$ is the expected number of steps with $X(t) = j$ when $X(0)=i$.
-	\end{center}
+	$E$ is a matrix where $E_{ij}$ is the expected number of steps with $X(t) = j$ when $X(0)=i$.
 	\end{definition}
 \item Probability of reaching a transient state:
 	\begin{definition}
+	$F$ is a matrix where
 	\[
-	f_{ij} = P(X(t)=j \text{ for some } t \geq 1 | X(0)=i)
+	F_{ij} = P(X(t)=j \text{ for some } t \geq 1 | X(0)=i)
 	\]
 	\end{definition}
 \end{enumerate}
 \end{frame}
 
-\begin{frame}{Computing $s_{ij}$ \& $f_{ij}$}
+\begin{frame}{Computing $E$ \& $F$}
 \begin{theorem}
 For a Markov chain $\mathbb{X}$ consisting finite transient states,
 \[
-s_{ij} = (I - T)^{-1}_{ij}
+E = (I - T)^{-1}
 \]
 where $I$ is an identity matrix, $T$ is the induced matrix of $P$ by all the transient states in $P$.
 Moreover,
 \[
-f_{ij} = \frac{s_{ij} - \delta_{ij}}{s_{jj}} ~\text{,where}~ \delta_{ij}=
+F_{ij} = \frac{E_{ij} - \delta_{ij}}{E_{jj}} ~\text{,where}~ \delta_{ij}=
 \begin{cases}
 1 & \text{if } i=j \\
 0 & \text{if } i \neq j
@@ -852,7 +852,31 @@ f_{ij} = \frac{s_{ij} - \delta_{ij}}{s_{jj}} ~\text{,where}~ \delta_{ij}=
 \end{frame}
 
 \begin{frame}{Proof}
+Conditioned on $X(1)$, we have
+\[
+E_{ij} = \underbrace{\delta_{ij}}_{\text{step} = 0} + 
+	\underbrace{\sum_k P_{ik} \cdot E_{kj}}_{\text{step} \geq 1}
+	= \sum_k T_{ik} \cdot E_{kj}
+\]
+The 2nd equation works since the process will not go back to transient state once it enter a recurrent state.
+Then, we have
+\begin{align*}
+& I \times E = E = I + T \times E \\
+\implies & (I - T) \times E = I \\
+\implies & E = (I - T)^{-1}
+\end{align*}
+\end{frame}
 
+\begin{frame}{Proof (cont.)}
+Conditioned on whether or not $X(t) = j$ holds for some $t \geq 1$, we have
+\[
+E_{ij} = \underbrace{\delta_{ij}}_{\text{step} = 0} + 
+	\underbrace{F_{ij} \cdot E_{jj}}_{\text{steps $\geq$ the first $j$}}
+\]
+therefore,
+\[
+F_{ij} = \frac{E_{ij} - \delta_{ij}}{E_{jj}}
+\]
 \end{frame}
 
 \end{document}
