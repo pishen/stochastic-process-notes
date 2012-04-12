@@ -8,6 +8,7 @@
 \newtheorem{ineq}{Inequality}
 \newtheorem{eq}{Equality}
 \newtheorem{target}{Target}
+\newtheorem{obs}{Observation}
 \usetheme{Berlin}
 \useoutertheme{infolines}
 \setbeamertemplate{navigation symbols}{}
@@ -961,6 +962,92 @@ e_1 & = P(\text{extinct}|X(0) = 1) \\
 & = \sum_{j \geq 0} {e_1}^j \cdot p_j
 \end{align*}
 We then solve the above equation to get $e_1$.
+\end{frame}
+
+\begin{frame}{Example}
+\begin{align*}
+& p_0 = p_1 = 0.25,\quad p_2 = 0.5 \\
+\implies & \mu = 1 \cdot 0.25 + 2 \cdot 0.5 > 1 \\
+\implies & e_1 = {e_1}^0 \cdot 0.25 + {e_1}^1 \cdot 0.25 + {e_1}^2 \cdot 0.5 \\
+\implies & e_1 = \{1/2,~1\} \\
+& \text{since $\mu > 1$, $e_1 \neq 1$}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Reversed Markov chain}
+\begin{definition}
+Let $\mathbb{X}$ (resp. $\mathbb{Y}$) be a Markov chain with matrix $P$ (resp. $Q$).\\
+We say that $\mathbb{Y}$ is the reversed chain of $\mathbb{X}$ if there exists a stationary distribution $\pi$ of $\mathbb{X}$ such that
+\[
+\pi_i \cdot Q_{ij} = \pi_j \cdot P_{ji}
+\]
+holds for all states $i,~ j \in S$.
+\end{definition}
+\end{frame}
+
+\begin{frame}{Observation 1}
+\begin{obs}
+The reversed sequence $\mathbb{Y}$ of $\mathbb{X}$ is a Markov chain.
+\end{obs}
+\end{frame}
+
+\begin{frame}{Proof}
+\begin{align*}
+& P(Y(n) = i_0 | Y(n-1) = i_1, Y(n-2) = i_2, \ldots , Y(n-k) = i_k) \\
+= & P(X(n) = i_0 | X(n+1) = i_1, X(n+2) = i_2, \ldots , X(n+k) = i_k) \\
+= & \frac{P(X(n) = i_0, X(n+1) = i_1, \ldots , X(n+k) = i_k)}{P(X(n+1) = i_1, \ldots , X(n+k) = i_k)} \\
+= & \frac{P(X(n)=i_0)\cdot P(X(n+1)=i_1|X(n)=i_0)\cdot P_{i_1 i_2}\cdots P_{i_{k-1}i_k}}{P(X(n+1)=i_1)\cdot P_{i_1 i_2}\cdots P_{i_{k-1}i_k}} \\
+= & \frac{P(X(n)=i_0, X(n+1)=i_1)}{P(X(n+1)=i_1)} \\
+= & P(X(n)=i_0|X(n+1)=i_1) \\
+= & P(Y(n)=i_0|Y(n-1)=i_1)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Observation 2}
+\begin{obs}
+If $\mathbb{Y}$ is the reversed sequence of Markov chain $\mathbb{X}$ and $\pi$ is a stationary distribution of $\mathbb{X}$, then
+\[
+\pi_i \cdot Q_{ij} = \pi_j \cdot P_{ji}
+\]
+holds for all $i,j \in S$, where $Q$ is the transition matrix of $\mathbb{Y}$.
+\end{obs}
+\end{frame}
+
+\begin{frame}{Proof}
+Let $\mathbb{X}$ and $\mathbb{Y}$ have distribution $\pi$
+\begin{align*}
+\pi_i \cdot Q_{ij} & = P(Y(n-1)=i)\cdot P(Y(n)=j|Y(n-1)=i) \\
+& = P(Y(n-1)=i, Y(n)=j) \\
+& = P(Y(n-1)=i|Y(n)=j)\cdot P(Y(n)=j) \\
+& = P(X(n+1)=i|X(n)=j)\cdot P(X(n)=j) = \pi_j \cdot P_{ji}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Observation 3}
+\begin{obs}
+Let $P$ (resp. $Q$) be the transition matrix of $\mathbb{X}$ (resp. $\mathbb{Y}$),
+if vector $\pi$ satisfy the following
+\begin{itemize}
+\item $\sum_{i\in S} \pi_i = 1$
+\item $\pi_i \geq 0 \quad\forall i \in S$
+\item $\pi_i \cdot Q_{ij} = \pi_j \cdot P_{ji} \quad\forall i,j \in S$
+\end{itemize}
+then $\mathbb{Y}$ is the reversed sequence of $\mathbb{X}$.
+\end{obs}
+\end{frame}
+
+\begin{frame}{Proof}
+From the third property, we have
+\[
+\sum_{j\in S} \pi_i \cdot Q_{ij} = \pi_i = \sum_{j\in S} \pi_j \cdot P_{ji} \quad\forall i \in S
+\]
+From the 2nd equation, we know that $\pi \times P = \pi$, hence $\pi$ is a stationary distribution of $\mathbb{X}$.
+
+Then by observation 2, we know that for any $\pi$, there's a reversed sequence $\mathbb{Y}'$, whose transition matrix $Q'$ satisfy
+\[
+\pi_i \cdot Q_{ij}' = \pi_j \cdot P_{ji} \quad\forall i,j \in S
+\]
+hence $\mathbb{Y} = \mathbb{Y}'$, which is a reversed sequence of $\mathbb{X}$.
 \end{frame}
 
 \end{document}
