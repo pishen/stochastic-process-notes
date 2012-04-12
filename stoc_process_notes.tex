@@ -969,9 +969,10 @@ We then solve the above equation to get $e_1$.
 & p_0 = p_1 = 0.25,\quad p_2 = 0.5 \\
 \implies & \mu = 1 \cdot 0.25 + 2 \cdot 0.5 > 1 \\
 \implies & e_1 = {e_1}^0 \cdot 0.25 + {e_1}^1 \cdot 0.25 + {e_1}^2 \cdot 0.5 \\
-\implies & e_1 = \{1/2,~1\} \\
-& \text{since $\mu > 1$, $e_1 \neq 1$}
+\implies & e_1 = \{1/2,~1\}
 \end{align*}
+Since $\mu > 1$, we know $\lim_{n\to\infty} E[X(n)] = \infty$.\\
+But if $e_1 = 1$, we have $P(\lim_{n\to\infty} X(n) = 0) = 1$, which would not make $\lim_{n\to\infty} E[X(n)] = \infty$, hence $e_1 \neq 1$.
 \end{frame}
 
 \begin{frame}{Reversed Markov chain}
