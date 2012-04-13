@@ -110,6 +110,7 @@ LeoSW, windker
 	\[
 	P^m_{ij} > 0 \text{ and } P^n_{ji} > 0
 	\]
+	We say a Markov chain $\mathcal{X}$ is irreducible if $i \leftrightarrow j \quad \forall i, j \in S$
 	\end{definition}
 \end{frame}
 
@@ -120,11 +121,16 @@ LeoSW, windker
 	\item State $i$ is recurrent if and only if state $j$ is recurrent.
 	\item State $i$ is transient if and only if state $j$ is transient.
 	\end{itemize}
+	Corollary: $\mathcal{X}$ is finite and irreducible $\implies$ all states are recurrent.
+	\begin{itemize}
+	\item $\mathcal{X}$ is finite $\implies \exists i \in S$ is recurrent (proof later)
+	\item By Lemma 2, all states are recurrent
+	\end{itemize}
 	\end{lemma}
 \end{frame}
 
 \begin{frame}{Proof}
-	Let $m$ and $n$ be nonnegative integers with $P^m_{ij} \cdot P^n_{ji} > 0$.
+	Let $m$ and $n$ be nonnegative integers with $P^m_{ij},  P^n_{ji} > 0$.
 	Suppose that state $j$ is recurrent, i.e., $\sum_{t=0}^\infty P^t_{jj} = \infty$.
 	We have
 	\begin{align*}
@@ -143,9 +149,12 @@ LeoSW, windker
 	Let $X(0) = 0$ (i.e. at time 0 the drunken man is in state 0).
 	The transition probabilities are such that
 	\[
-	P_{i(i+1)} = P_{i(i-1)} = 0.5
+	P_{i, (i+1)} = P_{i, (i-1)} = 0.5
 	\]
 	holds for all states $i$ of $\mathbb{X}$.
+\end{frame}
+
+\begin{frame}{Gambler's ruin}
 \end{frame}
 
 \begin{frame}{Outline}
