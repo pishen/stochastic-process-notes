@@ -686,7 +686,7 @@ LeoSW, windker
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Theorem 3}
+\begin{frame}{Theorem 3}\label{pro_value}
 	\begin{theorem}
 	If $\mathbb{X}$ is irreducible, then the long-run proportion $r_i$ exists with probability 1, moreover,
 	\begin{enumerate}
@@ -972,13 +972,13 @@ We then solve the above equation to get $e_1$.
 \implies & e_1 = \{1/2,~1\}
 \end{align*}
 Since $\mu > 1$, we know $\lim_{n\to\infty} E[X(n)] = \infty$.\\
-But if $e_1 = 1$, we have $P(\lim_{n\to\infty} X(n) = 0) = 1$, which would not make $\lim_{n\to\infty} E[X(n)] = \infty$, hence $e_1 \neq 1$.
+But if $e_1 = 1$, we have $\lim_{n\to\infty} P(X(n) = 0) = 1$, which would not make $\lim_{n\to\infty} E[X(n)] = \infty$, hence $e_1 \neq 1$.
 \end{frame}
 
 \begin{frame}{Reversed Markov chain}
 \begin{definition}
 Let $\mathbb{X}$ (resp. $\mathbb{Y}$) be a Markov chain with matrix $P$ (resp. $Q$).\\
-We say that $\mathbb{Y}$ is the reversed chain of $\mathbb{X}$ if there exists a stationary distribution $\pi$ of $\mathbb{X}$ such that
+We say that $\mathbb{Y}$ is the \textit{reversed chain} of $\mathbb{X}$ if there exists a stationary distribution $\pi$ of $\mathbb{X}$ such that
 \[
 \pi_i \cdot Q_{ij} = \pi_j \cdot P_{ji}
 \]
@@ -1035,6 +1035,10 @@ if vector $\pi$ satisfy the following
 \end{itemize}
 then $\mathbb{Y}$ is the reversed sequence of $\mathbb{X}$.
 \end{obs}
+\begin{itemize}
+\item The long-run proportion of $i\to j$ in the sequence of $\mathbb{Y}$ is equal to the long-run proportion of $j\to i$ in the sequence of $\mathbb{X}$.
+\item Reversed Markov chain is the reversed sequence.
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Proof}
@@ -1049,6 +1053,50 @@ Then by observation 2, we know that for any $\pi$, there's a reversed sequence $
 \pi_i \cdot Q_{ij}' = \pi_j \cdot P_{ji} \quad\forall i,j \in S
 \]
 hence $\mathbb{Y} = \mathbb{Y}'$, which is a reversed sequence of $\mathbb{X}$.
+\end{frame}
+
+\begin{frame}{Example: Bulb's life}
+\begin{center}
+\includegraphics[scale=0.1]{light_bulb_1.png}
+\end{center}
+There's a room which need to be lighted by one bulb, when the bulb in use fails, it will be replaced by a new one on next day.
+\begin{itemize}
+\item $X(n) = i$ if the bulb in use on day $n$ is in its $i$th day of use.
+\item $L$ is a random variable representing the lifetime of a bulb.
+\end{itemize}
+We want to know the stationary probability $\pi_i$ of state $i$.
+\end{frame}
+
+\begin{frame}{Example: Bulb's life (cont.)}
+$\mathbb{X}$ is a irreducible, positive recurrent, aperiodic Markov chain which has the sequence like this:
+\[
+1,2,3,1,2,3,4,5,1,1,2,1,2,3,4,\ldots
+\]
+We know that
+\[
+P_{i1} = P(\text{buld, on its $i$th day of use, fails}) = \frac{P(L=i)}{P(L\geq i)} = 1 - P_{i(i+1)}
+\]
+And the expected return time of state $1$ is $E[L]$, which means that the long-run proportion of state $1$ is $1/E[L]$ by page \pageref{pro_value}.
+\end{frame}
+
+\begin{frame}{Example: Bulb's life (cont.)}
+Take $\mathbb{Y}$ (with matrix $Q$) as the reversed chain of $\mathbb{X}$, we know that for all $i\in S$,
+\begin{itemize}
+\item $Q_{(i+1)i} = 1$
+\item $Q_{1i} = P(L = i)$
+\item $\pi_1\cdot Q_{1i} = \pi_i\cdot P_{i1}$
+\end{itemize}
+Hence,
+\[
+\pi_i = \frac{\pi_1\cdot Q_{1i}}{P_{i1}} = 
+\frac{P(L=i)\cdot P(L\geq i)}{E[L]\cdot P(L=i)} = \frac{P(L\geq i)}{E[L]}
+\]
+\end{frame}
+
+\begin{frame}{Time-reversible}
+\begin{definition}
+$\mathbb{X}$ is \textit{time-reversible} if $\mathbb{X}$ is the reversed chain of $\mathbb{X}$.
+\end{definition}
 \end{frame}
 
 \end{document}
