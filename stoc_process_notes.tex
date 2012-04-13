@@ -1108,4 +1108,61 @@ $\mathbb{X}$ is \textit{time-reversible} if $\mathbb{X}$ is the reversed chain o
 \end{definition}
 \end{frame}
 
+\begin{frame}{Example: Reversed drunken man}
+\begin{center}
+\includegraphics[scale=1.0]{drunken_man}
+\end{center}
+\begin{itemize}
+\item $0 < p_0\leq 1$
+\item $0\leq p_m < 1$
+\item $0 < p_i < 1 \quad\forall i = 1,\ldots,m-1$
+\end{itemize}
+The long-run proportion of transition $i\to i+1$ and $i+1\to i$ are the same, since one must go back to $i$ from $i+1$ in order to go to $i+1$ from $i$.\\
+Hence the drunken man problem is time-reversible.
+\end{frame}
+
+\begin{frame}{Example: Reversed drunken man (cont.)}
+\begin{align*}
+\pi_0\cdot p_0 &= \pi_1\cdot (1-p_1)\\
+\pi_1\cdot p_1 &= \pi_2\cdot (1-p_2)\\
+&\vdots \\
+\pi_{m-1}\cdot p_{m-1} &= \pi_m\cdot (1-p_m)
+\end{align*}
+Thus,
+\begin{align*}
+\pi_1 & = \pi_0\cdot p_0/(1-p_1) \\
+\pi_2 & = \pi_1\cdot p_1/(1-p_2) \\
+& \vdots \\
+\pi_m & = \pi_{m-1}\cdot p_{m-1}/(1-p_m)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Example: Reversed drunken man (cont.)}
+\begin{align*}
+& \pi_i = \underbrace{\frac{\prod_{j=0}^{i-1}p_j}{\prod_{j=1}^{i}(1-p_j)}}_{q_i}\cdot \pi_0 
+	\quad\forall i=1,\ldots m \\
+\implies & \pi_0 + \sum_{i=1}^m \pi_i = 1 = \pi_0 + \sum_{i=1}^m q_i\cdot \pi_0 \\
+\implies & \pi_0 = \frac{1}{1 + \sum_{i=1}^m q_i} \\
+\implies & \pi_k = \frac{q_k}{1 + \sum_{i=1}^m q_i} \quad\forall k=0,1,\ldots m
+\end{align*}
+\end{frame}
+
+\begin{frame}{Example: Two bukkits of balls}
+There're two bukkits contain total $m$ balls.\\
+In each step, we randomly choose one ball and put it in another bukkit.\\
+Let $X(n)$ represent the number of balls in the first bukkit, it's the Markov chain of previous example with
+\[
+p_0 = 1,~p_m = 0,~p_i = \frac{m-i}{m} \quad\forall i=1,\ldots,m-1
+\]
+We can get that
+\[
+q_i = \frac{\prod_{j=0}^{i-1}\frac{m-j}{m}}{\prod_{j=1}^{i}\frac{j}{m}} = 
+\frac{\prod_{j=0}^{i-1}m-j}{\prod_{j=1}^{i}j} = \binom{m}{i} \quad\forall i=1,\ldots m
+\]
+\[
+\implies \pi_0 = \frac{1}{1 + \sum_{i=1}^m \binom{m}{i}} = 
+\frac{1}{2^m} \implies \pi_k = \frac{\binom{m}{k}}{2^m} \quad\forall k=0,1,\ldots m
+\]
+\end{frame}
+
 \end{document}
