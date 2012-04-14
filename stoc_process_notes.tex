@@ -1033,7 +1033,7 @@ Let $\mathbb{X}$ and $\mathbb{Y}$ have distribution $\pi$
 \end{align*}
 \end{frame}
 
-\begin{frame}{Observation 3}
+\begin{frame}{Observation 3}\label{obs3}
 \begin{obs}
 Let $P$ (resp. $Q$) be the transition matrix of $\mathbb{X}$ (resp. $\mathbb{Y}$),
 if vector $\pi$ satisfy the following
@@ -1163,6 +1163,111 @@ q_i = \frac{\prod_{j=0}^{i-1}\frac{m-j}{m}}{\prod_{j=1}^{i}\frac{j}{m}} =
 \implies \pi_0 = \frac{1}{1 + \sum_{i=1}^m \binom{m}{i}} = 
 \frac{1}{2^m} \implies \pi_k = \frac{\binom{m}{k}}{2^m} \quad\forall k=0,1,\ldots m
 \]
+\end{frame}
+
+\begin{frame}{Example: A random walk}
+\begin{columns}
+\begin{column}{0.4\textwidth}
+\begin{center}
+\includegraphics[scale=1.0]{random_walk}
+\end{center}
+\end{column}
+\begin{column}{0.6\textwidth}
+\[
+P_{ij} = \frac{w(i,j)}{\sum_k w(i,k)}
+\]
+where $w(a,b)$ is the weight of edge $(a,b)$.\\
+To make it as a time-reversible chain, we let
+\[
+\pi_i = \frac{\sum_k w(i,k)}{\sum_\ell \sum_k w(\ell,k)}
+\]
+We can see that
+\[
+\pi_i\cdot P_{ij} = \pi_j\cdot P_{ji}
+\]
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Hastings-Metropolis sampling algorithm}
+Design an irreducible Markov chain $\mathbb{X}$ such that the unique stationary distribution of $\mathbb{X}$ is the distribution of random variable $Y$.\\
+Since the long-run proportion of state $i$ is $P(Y=i)$,
+\[
+\lim_{n\to\infty} \frac{X(1)+X(2)+\ldots+X(n)}{n} = \sum_{i\in S} i\cdot P(Y=i) = E[Y] = \mu
+\]
+
+While computing $\mu$ by the law of large number is difficult (hard to sample on $Y$), we use this alternative method to compute $\mu$ by generating a sequence of $\mathbb{X}$, which is sometime easier.
+\end{frame}
+
+\begin{frame}{Hastings-Metropolis sampling algorithm (cont.)}\label{possible_Y}
+There's a random variable $Y$ such that
+\[
+P(Y=i) = \frac{b_i}{C}
+\]
+for some unknown (or intractable) $C = \sum_{i\in S}b_i$.\\
+We then design a Markov chain $\mathbb{X}$ that
+\begin{itemize}
+\item $P_{ii} = Q_{ii} + \sum_{k\in S, k\neq i} Q_{ik}\cdot (1-q_{ik})$
+\item $P_{ij} = Q_{ij}\cdot q_{ij} \quad\forall j\neq i$
+\end{itemize}
+where
+\begin{itemize}
+\item $Q$ is the transition matrix of an arbitrary irreducible Markov chain which has the same sample space as $\mathbb{X}$.
+\item $q$ is a matrix to be determined later.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Hastings-Metropolis sampling algorithm (cont.)}
+For $n = 0,1,\ldots$,
+\begin{enumerate}
+\item If $X(n)=i$, set $Z$ such that $P(Z = j) = Q_{ij} \quad\forall j\in S$.
+\item If $Z = j$, set $X(n+1)$ such that
+	\begin{itemize}
+	\item $P(X(n+1)=j) = q_{ij}$
+	\item $P(X(n+1)=i) = 1 - q_{ij}$
+	\end{itemize}
+\end{enumerate}
+One can see that this satisfies the requirement on previous page.
+\end{frame}
+
+\begin{frame}{Hastings-Metropolis sampling algorithm (cont.)}
+Then, we let
+\begin{align*}
+& q_{ij} = \min\left( \frac{b_j\cdot Q_{ji}}{b_i\cdot Q_{ij}}, 1 \right) \\
+\implies & b_i\cdot Q_{ij}\cdot q_{ij} = b_j\cdot Q_{ji}\cdot q_{ji} \\
+\implies & \frac{b_i}{C}\cdot P_{ij} = \frac{b_j}{C}\cdot P_{ji}
+\end{align*}
+By observation 3 on page \pageref{obs3}, we know that $(b_1/C, b_2/C,\ldots)$ is the stationary distribution of $\mathbb{X}$.
+\end{frame}
+
+\begin{frame}{Example: Space of permutations}
+\begin{example}
+Let $S$ consist of all the permutations $(x_1, x_2, \ldots, x_n)$ of $\{1,2,\ldots,n\}$ that
+\[
+\sum_{i=k}^n k\cdot x_k \geq \frac{n^3}{4}
+\]
+\end{example}
+\begin{itemize}
+\item This is same as $Y$ in page \pageref{possible_Y} with $C=|S|$ and $b_i = 1 ~\forall i$.
+\item $S$ is hard to compute.
+\item We need to design a matrix $Q$ such that when given a permutation $x$, it's efficient to compute the value of $Q_{xy} ~\forall y\in S$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Space of permutations (cont.)}
+We let
+\[
+Q_{xy} = \frac{1}{N(x)} \quad,\text{if $y$ can be obtained from $x$ by one swap}
+\]
+where $N(x)$ is the number of permutations that can be obtained from $x$ by one swap.
+For example:
+\[
+\underbrace{(1,2,3,4,5)}_y \leftrightarrow 
+\underbrace{(1,3,2,4,5)}_x \leftrightarrow 
+\underbrace{(1,3,4,2,5)}_y
+\]
+This chain is irreducible since each $x\in S$ can go to $(x_1,x_2,\ldots,x_n)$, where $x_1 \leq x_2 \leq \ldots \leq x_n$, by several swaps.\\
+Also, given a $x$, finding all the obtainable $y$ can be done efficiently.
 \end{frame}
 
 \end{document}
