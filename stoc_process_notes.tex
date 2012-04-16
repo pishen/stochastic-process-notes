@@ -29,6 +29,25 @@ LeoSW, windker
 \end{center}
 \end{frame}
 
+\begin{frame}{Stochastic Process}
+	\begin{definition}
+	A Stochastic process is a set of random variables $\{X(t) | t \in T\}$ where T is a index ( time) set. \\
+	State Space: possible value of X(t) for each t, which is defined as subset of R.
+	\end{definition}
+\end{frame}
+
+\begin{frame}{Stochastic Process}
+	\begin{definition}
+	A Stochastic Process $\mathbb{X}$ with state space S is a Markov Chain if $\exists 0 \leq p_{ij} \leq 1 \quad \forall i,j \in S$ such that
+	\begin{align*}
+		(a) \quad & \sum_{j \in S} p_{ij} = 1 \quad \forall i \in S \\
+		(b) \quad & P(X(t+1) = j | X(0) = i_0, X(1) = i_1, ..., X(t) = i) = p_{ij} \\
+			& \quad \forall t, i_0,i _1, ..., i_{t-1}
+	\end{align*}
+	$\mathbb{P}$ denotes the matrix form of p_{ij} with sum of any row is 1.
+	\end{definition}
+\end{frame}
+
 \begin{frame}{Recurrent \& transient}
 	\begin{definition}
 	The \textit{recurrent probability} of state $i$ of Markov chain $\mathbb{X}$ is 
