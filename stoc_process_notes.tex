@@ -4,6 +4,11 @@
 \usepackage{lmodern}
 \usepackage{amsfonts}
 \usepackage{graphicx}
+\usepackage{color}
+\definecolor{blue}{rgb}{0.0, 0.0, 1.0}
+\definecolor{yellow}{rgb}{1.0, 1.0, 0.0}
+\definecolor{green}{rgb}{0.0, 1.0, 0.0}
+\definecolor{red}{rgb}{1.0, 0.0, 0.0}
 %\usepackage{mathtools}
 \newtheorem{ineq}{Inequality}
 \newtheorem{eq}{Equality}
@@ -46,6 +51,35 @@ LeoSW, windker
 	\end{align*}
 	$\mathbb{P}$ denotes the matrix form of p_{ij} with sum of any row is 1.
 	\end{definition}
+	Lemma: $P(X(n) = j | X(0) = i) = \mathbb{P}^n[i, j]$
+\end{frame}
+
+\begin{frame}{Proof of lemma}
+	We know statement is true for $(m+n) = 0$. For $(m+n) > 0$: 
+	\begin{align*}
+	P(X(m+n) = j | X(0) = i)
+		&\text{\color{yellow}{=} } \sum_{k \in S} P(X(m+n) = j \text{ and } X(m) = k | X(0) = i) \\
+		&\text{\color{blue}{=} } \sum_{k \in S} P(X(m+n) = j | X(m) = k \text{ and } X(0) = i) \cdot P(X(m) = k | X(0) = i) \\
+		&\text{\color{green}{=} } \sum_{k \in S} P(X(m+n) = j | X(m) = k) \cdot P(X(m) = k | X(0) = i) \\
+		&\text{\color{red}{=} } \sum_{k \in S} P^n[k, j] \cdot P^m[i, k] \\
+		&= \sum_{k \in S} P^m[i, k] \cdot P^n[k, j] \\
+		&= \mathbb{P}^n[i, j]
+	\end{align*}
+	\color{yellow}{=}: conditional on $X(m)$ \\
+	\color{blue}{=}: definition of conditional probability \\
+	\color{green}{=}: (see next page) \\
+	\color{red}{=}: inductive hypothesis
+\end{frame}
+
+\begin{frame}{Proof of lemma(cont)}
+	\begin{align*}
+	P(X(m+n) = j | X(m) = k \text{ and } X(0) = i) 
+		&\text{\color{blue}{=} } \sum_{r \in S} P(X(m+n) = j | X(m+n-1) = r \text{ and } X(m) = k \text{ and } X(0) = i) \cdot P(X(m+n-1) = r | X(m) = k \text{ and } X(0) = i)\\
+		&\text{\color{yellow}{=} } \sum_{r \in S} P(X(m+n) = j | X(m+n-1) = r) \cdot P(X(m+n-1) = r | X(m) = k) \\
+		&= P(X(m+n) = j | X(m) = k)
+	\end{align*}
+	\color{blue}{=}: conditional on $X(m+n-1)$ \\
+	\color{yellow}{=}: first part by definition of Markov chain and second part by inductive hypothesis \\
 \end{frame}
 
 \begin{frame}{Recurrent \& transient}
@@ -1290,3 +1324,4 @@ Also, given a $x$, finding all the obtainable $y$ can be done efficiently.
 \end{frame}
 
 \end{document}
+
