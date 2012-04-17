@@ -342,13 +342,13 @@ LeoSW, windker
 	\begin{lemma}
 		If state $j$ has period $1$ and is positive recurrent, then
 		\[
-		\pi_j \equiv \lim_{n \to \infty} P^n_{ij}
+		\pi_{ij} \equiv \lim_{n \to \infty} P^n_{ij}
 		\]
 		exists and is positive for all states $i \in S$.
 	\end{lemma}
 	\begin{itemize}
 		\item This can be proved by the Blackwell theorem in Renewal theory.
-		\item It doesn't promise that each $\pi_j$ for different $i$ will be the same.
+		\item It doesn't promise that $\pi_{ij} = \pi_{i'j}$ for any $i,i' \in S$.
 			But they will be the same if we add the irreducible property.
 	\end{itemize}
 \end{frame}
@@ -393,7 +393,7 @@ LeoSW, windker
 \begin{frame}{Inequality 1}
 	\begin{ineq}
 		\[
-		\sum_{j \in S} \pi_j \leq 1
+		\sum_{j \in S} \pi_{ij} \leq 1 \quad\forall i \in S
 		\]
 	\end{ineq}
 \end{frame}
@@ -401,7 +401,7 @@ LeoSW, windker
 \begin{frame}
 	\begin{proof}
 		\begin{align*}
-			\lim_{m \to \infty} \sum_{j=1}^m \pi_j &= \lim_{m \to \infty} \sum_{j=1}^m \lim_{n \to \infty} P^n_{ij} \\
+			\lim_{m \to \infty} \sum_{j=1}^m \pi_{ij} &= \lim_{m \to \infty} \sum_{j=1}^m \lim_{n \to \infty} P^n_{ij} \\
 			&= \lim_{m \to \infty} \lim_{n \to \infty} \sum_{j=1}^m P^n_{ij} \\
 			&\leq \lim_{m \to \infty} \lim_{n \to \infty} \sum_{j \in S} P^n_{ij} = 1
 		\end{align*}
@@ -415,29 +415,28 @@ LeoSW, windker
 	\begin{ineq}
 		For state $j \in S$, we have
 		\[
-		\pi_j \geq \sum_{i \in S} \pi_i P_{ij}
+		\pi_{ij} \geq \sum_{k \in S} \pi_{ik} P_{kj}
 		\]
 	\end{ineq}
 \end{frame}
 
-\begin{frame}[shrink]
-	\begin{proof}
-		For $m \geq 1$ and $n \geq 1$,
-		\[
-		P^{n+1}_{ij} = \sum_{k \in S} P^n_{ik} P_{kj} \geq \sum_{k=1}^m P^n_{ik} P_{kj}
-		\]
-		then
-		\begin{align*}
-			\pi_j &= \lim_{n \to \infty} P^{n+1}_{ij} \\
-			&\geq \lim_{n \to \infty} \sum_{k=1}^m P^n_{ik} P_{kj} 
-			 = \sum_{k=1}^m \lim_{n \to \infty} P^n_{ik} P_{kj} 
-			 = \sum_{k=1}^m \pi_k P_{kj}\\
-		\end{align*}
-		hence, we know
-		\[
-		\lim_{m\to\infty} \sum_{k=1}^m \pi_k P_{kj} = \sum_{k \in S} \pi_k P_{kj} \leq \pi_j
-		\]
-	\end{proof}
+\begin{frame}{Proof}
+	For $m \geq 1$ and $n \geq 1$,
+	\[
+	P^{n+1}_{ij} = \sum_{k \in S} P^n_{ik} P_{kj} \geq \sum_{k=1}^m P^n_{ik} P_{kj}
+	\]
+	then
+	\[
+	\pi_{ij} = \lim_{n \to \infty} P^{n+1}_{ij}
+		\geq \lim_{n \to \infty} \sum_{k=1}^m P^n_{ik} P_{kj} 
+		 = \sum_{k=1}^m \lim_{n \to \infty} P^n_{ik} P_{kj} 
+		 = \sum_{k=1}^m \pi_{ik} P_{kj}
+	\]
+	hence, we know
+	\[
+	\lim_{m\to\infty} \pi_{ij} = \pi_{ij} \geq 
+	\lim_{m\to\infty}\sum_{k=1}^m \pi_{ik}P_{kj} = \sum_{k\in S} \pi_{ik}P_{kj}
+	\]
 \end{frame}
 
 \begin{frame}{Equality 1}
