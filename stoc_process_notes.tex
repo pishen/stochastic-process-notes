@@ -349,7 +349,7 @@ LeoSW, windker
 	\begin{itemize}
 		\item This can be proved by the Blackwell theorem in Renewal theory.
 		\item It doesn't promise that $\pi_{ij} = \pi_{i'j}$ for any $i,i' \in S$.
-			But they will be the same if we add the irreducible property.
+			But they will be the same if we add the irreducible property ($i \leftrightarrow i'$).
 	\end{itemize}
 \end{frame}
 
@@ -398,14 +398,12 @@ LeoSW, windker
 	\end{ineq}
 \end{frame}
 
-\begin{frame}
-	\begin{proof}
+\begin{frame}{Proof}
 		\begin{align*}
 			\lim_{m \to \infty} \sum_{j=1}^m \pi_{ij} &= \lim_{m \to \infty} \sum_{j=1}^m \lim_{n \to \infty} P^n_{ij} \\
 			&= \lim_{m \to \infty} \lim_{n \to \infty} \sum_{j=1}^m P^n_{ij} \\
 			&\leq \lim_{m \to \infty} \lim_{n \to \infty} \sum_{j \in S} P^n_{ij} = 1
 		\end{align*}
-	\end{proof}
 	\begin{itemize}
 		\item The last equation works since $\sum_{j \in S} P^n_{ij} = 1$.
 	\end{itemize}
@@ -442,15 +440,24 @@ LeoSW, windker
 \begin{frame}{Equality 1}
 	\begin{eq}
 		\[
-		\pi_j = \sum_{i \in S} \pi_i P_{ij}
+		\pi_{j} = \sum_{i \in S} \pi_{i} P_{ij}
 		\]
 	\end{eq}
+	\textcolor{red}{change to $\pi_{ij}$}
 \end{frame}
 
 \begin{frame}
 	\begin{proof}
-		Assume that for some $j \in S$,
-		$\pi_j > \sum_{i \in S} \pi_i P_{ij}$, then
+		Assume for contradiction $\pi_{j} > \sum_{i \in S} \pi_{i} P_{ij}$, then
+%		\begin{align*}
+%		\lim_{m\to\infty}\sum_{j=1}^m & > \lim_{m\to\infty}\sum_{j=1}^m 
+%		\lim_{p\to\infty}\sum_{k=1}^p \pi_{ik}P_{kj} \\
+%		& = \lim_{m\to\infty}\lim_{p\to\infty}\sum_{j=1}^m \sum_{k=1}^p \pi_{ik}P_{kj} \\
+%		& = \lim_{m\to\infty}\lim_{p\to\infty}\sum_{k=1}^p \sum_{j=1}^m \pi_{ik}P_{kj} \\
+%		& = \lim_{m\to\infty}\lim_{p\to\infty}\sum_{k=1}^p \pi_{ik} \sum_{j=1}^m P_{kj} \\
+%		& \geq 
+%		\end{align*}
+		
 		\begin{align*}
 			\sum_{j \in S} \pi_j &> \sum_{j \in S}\sum_{i \in S} \pi_i P_{ij} \\
 			&= \sum_{i \in S} \pi_i \sum_{j \in S} P_{ij} = \sum_{i \in S} \pi_i
@@ -459,6 +466,7 @@ LeoSW, windker
 	\end{proof}
 	\begin{itemize}
 		\item $\sum$ should be represented by $\lim \sum$, the equation will still work.
+		\item \textcolor{red}{why the proof work when switching $\sum_{j \in S} \& \sum_{i \in S}$?}
 	\end{itemize}
 \end{frame}
 
