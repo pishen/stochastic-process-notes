@@ -518,7 +518,7 @@ LeoSW, windker
 	\end{proof}
 \end{frame}
 
-\begin{frame}{2. Uniqueness}
+\begin{frame}{2. Uniqueness}\label{uniqueness}
 	\begin{target}
 		If $s = (s_1, s_2, \ldots)$ is a stationary distribution of $\mathbb{X}$, then $s = \pi$.
 	\end{target}
@@ -681,6 +681,7 @@ LeoSW, windker
 	&= \lim_{n\to\infty} \frac{1}{n} \sum_{1 \leq t \leq n} \pi \\
 	&= \pi
 	\end{align*}
+	\textcolor{red}{can replace the proof for page \pageref{uniqueness}?}
 \end{frame}
 
 \begin{frame}{Proof (cont.)}\label{proportion_sum}
@@ -765,11 +766,12 @@ LeoSW, windker
 
 \begin{frame}{Theorem 3}\label{pro_value}
 	\begin{theorem}
-	If $\mathbb{X}$ is irreducible, then the long-run proportion $r_i$ exists with probability 1, moreover,
+	If $\mathbb{X}$ is irreducible, then the long-run proportion $r_i$ exists with probability $1$, moreover,
 	\begin{enumerate}
 	\item If state $i$ is positive recurrent (i.e. $0 < \mu_i < \infty$), then $P(r_i = \frac{1}{\mu_i}) = 1$.
 	\item If state $i$ is null recurrent (i.e. $\mu_i = \infty$) or transient, then $P(r_i = 0) = 1$.
 	\end{enumerate}
+	where $\mu_i$ is the expected return time of state $i$
 	\end{theorem}
 \end{frame}
 
