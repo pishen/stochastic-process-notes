@@ -489,7 +489,7 @@ LeoSW, windker
 	\textcolor{red}{still not clear enough}
 \end{frame}
 
-\begin{frame}{1. Existence of stationary probability distribution}
+\begin{frame}{1. Existence of stationary probability distribution}\label{existence}
 	We want to prove that
 	\begin{target}
 		There's a vector $s = (s_1, s_2, \ldots)$ such that
@@ -668,6 +668,7 @@ LeoSW, windker
 	As stated later, $\sum_{j \in S} r_j \leq 1$, hence by normalizing $r$, we prove that stationary distribution exist.
 	\begin{itemize}
 	\item \textcolor{red}{$(\lim f(n))\cdot g(n) = \lim f(n) \cdot g(n)$?}
+	\item \textcolor{red}{can replace the proof on page \pageref{existence}?}
 	\end{itemize}
 \end{frame}
 
@@ -846,7 +847,7 @@ LeoSW, windker
 	If all the states are positive recurrent, then by theorem 3, 
 	we know that all the $r_i > 0$ and is a finite value.
 	Since each state of drunken man problem has the same structure, all the $r_i$ has same value.
-	We then set $r = \epsilon\cdot \min (r_1, r_2, \ldots)$ ($0 < \epsilon < 1$) such that 
+	We then set $r = \epsilon\cdot r_i$ ($0 < \epsilon < 1$) such that 
 	$r_i > r > 0, \forall i$.
 	And get
 	\[
@@ -884,7 +885,7 @@ LeoSW, windker
 	\[
 	\mu_i = \frac{1}{P(X(0)=i)} = \frac{i!}{e^{-\lambda/p}\cdot (\lambda/p)^i}
 	\]
-	\textcolor{red}{need clean up}
+	\textcolor{red}{not clear enough}
 \end{frame}
 
 \begin{frame}{Corollary of theorem 2 \& 3}
@@ -901,7 +902,7 @@ For transient states $i$ and $j$, we define the following:
 \begin{enumerate}
 \item Expected steps in a transient state:
 	\begin{definition}
-	$E$ is a matrix where $E_{ij}$ is the expected number of steps with $X(t) = j$ when $X(0)=i$.
+	$E$ is a matrix where $E_{ij}$ is the expected number of steps $t$ with $X(t) = j$ when $X(0)=i$.
 	\end{definition}
 \item Probability of reaching a transient state:
 	\begin{definition}
