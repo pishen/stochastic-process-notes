@@ -355,7 +355,7 @@ LeoSW, windker
 
 \begin{frame}{Property of $\lim$}
 	\begin{itemize}
-		\item The position of $\lim$ cannot be switched arbitrarily in an equation.
+		\item The position of $\lim$ may not be switched arbitrarily in an equation.
 			\begin{example}
 				\[
 				1 = \lim_{n \to \infty}\lim_{m \to \infty} \frac{m}{m+n} \neq
@@ -440,34 +440,40 @@ LeoSW, windker
 \begin{frame}{Equality 1}
 	\begin{eq}
 		\[
-		\pi_{j} = \sum_{i \in S} \pi_{i} P_{ij}
+		\pi_{ij} = \sum_{k \in S} \pi_{ik} P_{kj}
 		\]
 	\end{eq}
-	\textcolor{red}{change to $\pi_{ij}$}
 \end{frame}
 
-\begin{frame}
-	\begin{proof}
-		Assume for contradiction $\pi_{j} > \sum_{i \in S} \pi_{i} P_{ij}$, then
+\begin{frame}{Proof}
+
+		Assume for contradiction $\pi_{ij} > \sum_{k \in S} \pi_{ik} P_{kj}$, then
+		\begin{align*}
+		\lim_{m\to\infty}\sum_{j=1}^m & > \lim_{m\to\infty}\sum_{j=1}^m 
+		\lim_{p\to\infty}\sum_{k=1}^p \pi_{ik}P_{kj} \\
+		& = \lim_{m\to\infty}\lim_{p\to\infty}\sum_{j=1}^m \sum_{k=1}^p \pi_{ik}P_{kj} \\
+		& = \lim_{m\to\infty}\lim_{p\to\infty}\sum_{k=1}^p \pi_{ik} \sum_{j=1}^m P_{kj} \\
+		& = \lim_{p\to\infty}\sum_{k=1}^p \pi_{ik} \lim_{m\to\infty}\sum_{j=1}^m P_{kj} \\
+		& = \lim_{p\to\infty}\sum_{k=1}^p \pi_{ik} \cdot 1 = \lim_{p\to\infty}\sum_{k=1}^p \pi_{ik}
+		\end{align*}
+		
 %		\begin{align*}
-%		\lim_{m\to\infty}\sum_{j=1}^m & > \lim_{m\to\infty}\sum_{j=1}^m 
-%		\lim_{p\to\infty}\sum_{k=1}^p \pi_{ik}P_{kj} \\
-%		& = \lim_{m\to\infty}\lim_{p\to\infty}\sum_{j=1}^m \sum_{k=1}^p \pi_{ik}P_{kj} \\
-%		& = \lim_{m\to\infty}\lim_{p\to\infty}\sum_{k=1}^p \sum_{j=1}^m \pi_{ik}P_{kj} \\
-%		& = \lim_{m\to\infty}\lim_{p\to\infty}\sum_{k=1}^p \pi_{ik} \sum_{j=1}^m P_{kj} \\
-%		& \geq 
+%			\sum_{j \in S} \pi_j &> \sum_{j \in S}\sum_{i \in S} \pi_i P_{ij} \\
+%			&= \sum_{i \in S} \pi_i \sum_{j \in S} P_{ij} = \sum_{i \in S} \pi_i
 %		\end{align*}
 		
-		\begin{align*}
-			\sum_{j \in S} \pi_j &> \sum_{j \in S}\sum_{i \in S} \pi_i P_{ij} \\
-			&= \sum_{i \in S} \pi_i \sum_{j \in S} P_{ij} = \sum_{i \in S} \pi_i
-		\end{align*}
-		Since a value cannot be greater than itself, we got contradiction.
-	\end{proof}
-	\begin{itemize}
-		\item $\sum$ should be represented by $\lim \sum$, the equation will still work.
-		\item \textcolor{red}{why the proof work when switching $\sum_{j \in S} \& \sum_{i \in S}$?}
-	\end{itemize}
+
+%	\begin{itemize}
+%		\item $\sum$ should be represented by $\lim \sum$, the equation will still work.
+%		\item \textcolor{red}{why the proof work when switching $\sum_{j \in S} \& \sum_{i \in S}$?}
+%	\end{itemize}
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+\begin{itemize}
+\item Since a value cannot be greater than itself, we got contradiction.
+\item In the 4th line, two $\lim$ can be switched because the value can only get larger when applying $\lim$ on it. \textcolor{red}{not sure}
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Proof of theorem 1}\label{thm1_proof}
