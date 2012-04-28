@@ -1348,5 +1348,81 @@ This chain is irreducible since each $x\in S$ can go to $(x_1,x_2,\ldots,x_n)$, 
 Also, given a $x$, finding all the obtainable $y$ can be done efficiently.
 \end{frame}
 
+\begin{frame}{Counting process}
+\begin{definition}
+A collection $\mathbb{N}$ of random variables is a \emph{counting process} if $N(t)$ denotes the total number of events that occur by time $t$.
+\end{definition}
+\begin{itemize}
+\item $N(t)$ is a nonnegative integer.
+\item The value of $N(t)$ is increasing as $t$ increase.
+\item $N(t) - N(s)$ is the number of events that occur between time index $s$ and $t$, where $t > s$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Two properties}
+\textbf{Independent increments}:
+\begin{definition}
+A counting process is \emph{independent increments} if the number of events in two non-overlapping time intervals are independent.
+\end{definition}
+\begin{itemize}
+\item For example, $N(s) - N(0)$ and $N(s+t) - N(s)$ are independent.
+\end{itemize}
+\textbf{Stationary increments}:
+\begin{definition}
+A counting process is \emph{stationary increments} if the number of events in any time interval depends only on the  length of the interval.
+\end{definition}
+\begin{itemize}
+\item For example, $P(N(s_1 + t) - N(s_1) = k) = P(N(s_2 + t) - N(s_2) = k)$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Poisson process}
+\begin{definition}
+A \emph{poisson process} with rate $\lambda$ is a counting process with independent increments and stationary increments such that
+\[
+P(N(s+t)-N(s) = n) = \frac{e^{-\lambda t}\cdot (\lambda t)^n}{n!}
+\]
+holds for all nonnegative integers.
+\end{definition}
+\begin{itemize}
+\item $N(s+t)-N(s)$ is poisson distributed with parameter $\lambda t$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{An operational definition}\label{operation_def}
+\begin{theorem}
+Let $\mathbb{N}$ be a counting process with independent increments and stationary increments.
+Then $\mathbb{N}$ is a poisson process if and only if the following two conditions hold:
+\begin{enumerate}
+\item $P(N(t)=1) = \lambda\cdot t + o(t)$
+\item $P(N(t)\geq 2) = o(t)$
+\end{enumerate}
+\end{theorem}
+\begin{itemize}
+\item We say that $f(t)=o(t)$ if
+\[
+\lim_{t\to 0} \frac{f(t)}{t} = 0
+\]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Proof}
+($\Longrightarrow$):\\
+Since $N(t)$ is poisson distributed with parameter $\lambda t$,
+\begin{align*}
+P(N(t)=1) = \frac{(\lambda t)\cdot e^{-\lambda t}}{1!} & = \lambda t 
+	\cdot\left(1 - \frac{\lambda t}{1!} + \frac{(\lambda t)^2}{2!} - \cdots\right) \\
+& = \lambda t - {\lambda}^2 t^2 + \cdots \\
+& = \lambda t + o(t)
+\end{align*}
+\begin{align*}
+P(N(t)=2) = \frac{(\lambda t)^2\cdot e^{-\lambda t}}{2!} & = \frac{(\lambda t)^2}{2!}
+	\cdot\left(1 - \frac{\lambda t}{1!} + \frac{(\lambda t)^2}{2!} - \cdots\right) \\
+& = o(t)
+\end{align*}
+One can prove that $P(N(t) = k) = o(t)$ for all $k \geq 2$,\\
+hence $P(N(t)\geq 2) = o(t)$.
+\end{frame}
+
 \end{document}
 
