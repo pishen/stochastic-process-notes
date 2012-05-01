@@ -1378,21 +1378,21 @@ A counting process is \emph{stationary increments} if the number of events in an
 
 \begin{frame}{Poisson process}
 \begin{definition}
-A \emph{poisson process} with rate $\lambda$ is a counting process with independent increments and stationary increments such that
+A \emph{Poisson process} with rate $\lambda$ is a counting process with independent increments and stationary increments such that
 \[
 P(N(s+t)-N(s) = n) = \frac{e^{-\lambda t}\cdot (\lambda t)^n}{n!}
 \]
 holds for all nonnegative integers.
 \end{definition}
 \begin{itemize}
-\item $N(s+t)-N(s)$ is poisson distributed with parameter $\lambda t$.
+\item $N(s+t)-N(s)$ is Poisson distributed with parameter $\lambda t$.
 \end{itemize}
 \end{frame}
 
 \begin{frame}{An operational definition}\label{operation_def}
 \begin{theorem}
 Let $\mathbb{N}$ be a counting process with independent increments and stationary increments.
-Then $\mathbb{N}$ is a poisson process if and only if the following two conditions hold:
+Then $\mathbb{N}$ is a Poisson process if and only if the following two conditions hold:
 \begin{enumerate}
 \item $P(N(t)=1) = \lambda\cdot t + o(t)$
 \item $P(N(t)\geq 2) = o(t)$
@@ -1408,7 +1408,7 @@ Then $\mathbb{N}$ is a poisson process if and only if the following two conditio
 
 \begin{frame}{Proof}
 ($\Longrightarrow$):\\
-Since $N(t)$ is poisson distributed with parameter $\lambda t$,
+Since $N(t)$ is Poisson distributed with parameter $\lambda t$,
 \begin{align*}
 P(N(t)=1) = \frac{(\lambda t)\cdot e^{-\lambda t}}{1!} & = \lambda t 
 	\cdot\left(1 - \frac{\lambda t}{1!} + \frac{(\lambda t)^2}{2!} - \cdots\right) \\
@@ -1422,6 +1422,71 @@ P(N(t)=2) = \frac{(\lambda t)^2\cdot e^{-\lambda t}}{2!} & = \frac{(\lambda t)^2
 \end{align*}
 One can prove that $P(N(t) = k) = o(t)$ for all $k \geq 2$,\\
 hence $P(N(t)\geq 2) = o(t)$.
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+($\Longleftarrow$):\\
+The moment-generating function of a random variable $X$ is
+\[
+\phi(u) = E[e^{u\cdot X}]
+\]
+We say that two random variables have the same distribution if their mement-generating function are the same.\\
+And if $X$ is Poisson distributed with parameter $\lambda t$, then
+\[
+E[e^{u\cdot X}] = e^{(e^u - 1)\cdot \lambda t}
+\]
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+We define $\phi_u(t) = E[e^{u\cdot N(t)}]$, then we know that
+\begin{align*}
+\phi_u(s+t) & = E[e^{u\cdot N(s+t)}] \\
+& = E[e^{u\cdot(N(s)-N(0))} e^{u\cdot(N(s+t)-N(s))}] \\
+& = E[e^{u\cdot N(s)}]\cdot E[e^{u\cdot (N(s+t) - N(s))}] \\
+& = E[e^{u\cdot N(s)}]\cdot E[e^{u\cdot N(t)}] \\
+& = \phi_u(s)\cdot \phi_u(t)
+\end{align*}
+The 3rd equation is because two independent random variables $X$ and $Y$ will make
+\[
+E[X\cdot Y] = E[X]\cdot E[Y]
+\]
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+By the two conditions in page \pageref{operation_def}, we know
+\[
+P(N(t) = 0) = 1 - \lambda t + o(t)
+\]
+Therefore,
+\begin{align*}
+\phi_u(t) & = E[e^{u\cdot N(t)}] \\
+& = e^{u\cdot 0}\cdot (1 - \lambda t + o(t)) + e^{u\cdot 1}\cdot (\lambda t + o(t)) \\
+& \qquad + (e^{u\cdot 2} + e^{u\cdot 3} + \cdots)\cdot o(t) \\
+& = 1 - \lambda t + e^u \cdot \lambda t + o(t) \\
+& = 1 + (e^u - 1)\cdot \lambda t + o(t)
+\end{align*}
+And
+\[
+\phi_u(s+t) = \phi_u(s)\cdot \phi_u(t) = \phi_u(s)\cdot (1 + (e^u - 1)\cdot \lambda t + o(t))
+\]
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+Differential on $\phi_u(s)$, we can get
+\begin{align*}
+{\phi_u}'(s) & = \lim_{t\to 0}\frac{\phi_u(s+t) - \phi_u(s)}{t}
+ = \lim_{t\to 0}(\phi_u(s)\cdot (e^u - 1)\cdot \lambda + o(t)) \\
+& = \phi_u(s)\cdot (e^u - 1)\cdot \lambda
+\end{align*}
+By $\frac{{\phi_u}'(s)}{\phi_u(s)} = (e^u - 1)\cdot \lambda$, we have
+\[
+\ln \phi_u(s) = \int (e^u - 1)\cdot \lambda \; \mathrm{d}s = (e^u - 1)\cdot \lambda s + C
+\]
+By $\phi_u(0) = 1$ and $\ln 1 = 0$, we know $C = 0$, hence
+\[
+\phi_u(s) = e^{(e^u - 1)\cdot \lambda s} \quad\forall s, u
+\]
+which means that $N(s)$ is Poisson distributed for all $s$.
 \end{frame}
 
 \end{document}
