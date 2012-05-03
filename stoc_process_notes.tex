@@ -1519,13 +1519,13 @@ We can observe that $T_1$ is expenential distributed.
 
 \begin{frame}{Proof (cont.)}
 \begin{align*}
-P(T_2 > t | T_1 = s) & = P(N(s) = N(s+t) = 1 | T_1 = s) \\
-& = P(N(s) = N(s+t) = 1) \\
+P(T_2 > t | T_1 = s) & = P(N(T_1+t) - N(T_1) = 0 | T_1 = s) \\
+& = P(N(T_1+t) - N(T_1) = 0) \\
 & = P(N(t) = 0) \\
 & = e^{-\lambda t}
 \end{align*}
-The 2nd equation is by independent increments.\textcolor{red}{why?} \\
-The 3rd equation is by stationary increments.\\
+%The 2nd equation is by independent increments.\textcolor{red}{why?} \\
+The equations are derived by stationary increments.\\
 \vspace{\baselineskip}
 Thus, $T_2$ is also exponential distributed with parameter $\lambda$. \\
 And $T_1$, $T_2$ are independent. \\
