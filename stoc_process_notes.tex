@@ -67,7 +67,6 @@ LeoSW, windker
 \end{frame}
 
 \begin{frame}{Proof of lemma(cont)}
-
 	{\color{brown}= }: conditional on $X(m)$ \\
 	{\color{blue}= }: definition of conditional probability \\
 	{\color{green}= }: (see next page) \\
@@ -1427,24 +1426,24 @@ hence $P(N(t)\geq 2) = o(t)$.
 
 \begin{frame}{Proof (cont.)}
 ($\Longleftarrow$):\\
-The moment-generating function of a random variable $X$ is
+The Laplace transform of a random variable $X$ is
 \[
-\phi(u) = E[e^{u\cdot X}]
+\phi(u) = E[e^{-u\cdot X}]
 \]
-We say that two random variables have the same distribution if their mement-generating function are the same.\\
+We say that two random variables have the same distribution if their Laplace transform are the same.\\
 And if $X$ is Poisson distributed with parameter $\lambda t$, then
 \[
-E[e^{u\cdot X}] = e^{(e^u - 1)\cdot \lambda t}
+E[e^{-u\cdot X}] = e^{(e^{-u} - 1)\cdot \lambda t}
 \]
 \end{frame}
 
 \begin{frame}{Proof (cont.)}
-We define $\phi_u(t) = E[e^{u\cdot N(t)}]$, then we know that
+We define $\phi_u(t) = E[e^{-u\cdot N(t)}]$, then we know that
 \begin{align*}
-\phi_u(s+t) & = E[e^{u\cdot N(s+t)}] \\
-& = E[e^{u\cdot(N(s)-N(0))} e^{u\cdot(N(s+t)-N(s))}] \\
-& = E[e^{u\cdot N(s)}]\cdot E[e^{u\cdot (N(s+t) - N(s))}] \\
-& = E[e^{u\cdot N(s)}]\cdot E[e^{u\cdot N(t)}] \\
+\phi_u(s+t) & = E[e^{-u\cdot N(s+t)}] \\
+& = E[e^{-u\cdot(N(s)-N(0))} e^{-u\cdot(N(s+t)-N(s))}] \\
+& = E[e^{-u\cdot N(s)}]\cdot E[e^{-u\cdot (N(s+t) - N(s))}] \\
+& = E[e^{-u\cdot N(s)}]\cdot E[e^{-u\cdot N(t)}] \\
 & = \phi_u(s)\cdot \phi_u(t)
 \end{align*}
 The 3rd equation is because two independent random variables $X$ and $Y$ will make
@@ -1460,15 +1459,15 @@ P(N(t) = 0) = 1 - \lambda t + o(t)
 \]
 Therefore,
 \begin{align*}
-\phi_u(t) & = E[e^{u\cdot N(t)}] \\
-& = e^{u\cdot 0}\cdot (1 - \lambda t + o(t)) + e^{u\cdot 1}\cdot (\lambda t + o(t)) \\
-& \qquad + (e^{u\cdot 2} + e^{u\cdot 3} + \cdots)\cdot o(t) \\
-& = 1 - \lambda t + e^u \cdot \lambda t + o(t) \\
-& = 1 + (e^u - 1)\cdot \lambda t + o(t)
+\phi_u(t) & = E[e^{-u\cdot N(t)}] \\
+& = e^{-u\cdot 0}\cdot (1 - \lambda t + o(t)) + e^{-u\cdot 1}\cdot (\lambda t + o(t)) \\
+& \qquad + (e^{-u\cdot 2} + e^{-u\cdot 3} + \cdots)\cdot o(t) \\
+& = 1 - \lambda t + e^{-u} \cdot \lambda t + o(t) \\
+& = 1 + (e^{-u} - 1)\cdot \lambda t + o(t)
 \end{align*}
 And
 \[
-\phi_u(s+t) = \phi_u(s)\cdot \phi_u(t) = \phi_u(s)\cdot (1 + (e^u - 1)\cdot \lambda t + o(t))
+\phi_u(s+t) = \phi_u(s)\cdot \phi_u(t) = \phi_u(s)\cdot (1 + (e^{-u} - 1)\cdot \lambda t + o(t))
 \]
 \end{frame}
 
@@ -1476,16 +1475,16 @@ And
 Differentiate on $\phi_u(s)$, we can get
 \begin{align*}
 {\phi_u}'(s) & = \lim_{t\to 0}\frac{\phi_u(s+t) - \phi_u(s)}{t}
- = \lim_{t\to 0}(\phi_u(s)\cdot (e^u - 1)\cdot \lambda + o(t)) \\
-& = \phi_u(s)\cdot (e^u - 1)\cdot \lambda
+ = \lim_{t\to 0}(\phi_u(s)\cdot (e^{-u} - 1)\cdot \lambda + o(t)) \\
+& = \phi_u(s)\cdot (e^{-u} - 1)\cdot \lambda
 \end{align*}
-By $\frac{{\phi_u}'(s)}{\phi_u(s)} = (e^u - 1)\cdot \lambda$, we have
+By $\frac{{\phi_u}'(s)}{\phi_u(s)} = (e^{-u} - 1)\cdot \lambda$, we have
 \[
-\ln \phi_u(s) = \int (e^u - 1)\cdot \lambda \; ds = (e^u - 1)\cdot \lambda s + C
+\ln \phi_u(s) = \int (e^{-u} - 1)\cdot \lambda \; ds = (e^{-u} - 1)\cdot \lambda s + C
 \]
 By $\phi_u(0) = 1$ and $\ln 1 = 0$, we know $C = 0$, hence
 \[
-\phi_u(s) = e^{(e^u - 1)\cdot \lambda s} \quad\forall s, u
+\phi_u(s) = e^{(e^{-u} - 1)\cdot \lambda s} \quad\forall s, u
 \]
 which means that $N(s)$ is Poisson distributed for all $s$.
 \end{frame}
