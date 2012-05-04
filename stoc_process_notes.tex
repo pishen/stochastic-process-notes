@@ -1581,5 +1581,20 @@ P(N_1(s+t) - N_1(s) = k_1) = \sum_{k\geq 0} \binom{k}{k_1}\cdot p^{k_1}\cdot (1-
 which has nothing to do with $s$.
 \end{frame}
 
+\begin{frame}{Proof (cont.)}
+\textbf{Independent increments}:\\
+Let $(s,s+t)$ and $(u,u+v)$ be two non-overlapping time intervals,
+\begin{align*}
+& P(N_1(s+t)-N_1(s)=k_1, N_1(u+v)-N_1(u)=\ell_1) \\
+= & \sum_{k\geq 0}\sum_{\ell\geq 0} P(N_1(s+t)-N_1(s)=k_1, N_1(u+v)-N_1(u)=\ell_1 \\
+& \qquad | N(s+t)-N(s)=k, N(u+v)-N(u)=\ell) \\
+& \qquad \cdot P(N(s+t)-N(s)=k, N(u+v)-N(u)=\ell) \\
+= & \sum_{k\geq 0}\sum_{\ell\geq 0} P(N_1(s+t)-N_1(s)=k_1 | N(s+t)-N(s)=k) \\
+& \qquad\cdot P(N_1(u+v)-N_1(u)=\ell_1 | N(u+v)-N(u)=\ell) \\
+& \qquad\cdot P(N(s+t)-N(s)=k)\cdot P(N(u+v)-N(u)=\ell) \\
+= & P(N_1(s+t)-N_1(s)=k_1)\cdot P(N_1(u+v)-N_1(u)=\ell_1)
+\end{align*}
+\end{frame}
+
 \end{document}
 
