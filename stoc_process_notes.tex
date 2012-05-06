@@ -1386,6 +1386,7 @@ holds for all nonnegative integers.
 \end{definition}
 \begin{itemize}
 \item $N(s+t)-N(s)$ is Poisson distributed with parameter $\lambda t$.
+\item The average number of events that occur in an unit time interval ($t=1$) is $\lambda$ (since the expectation value of Poisson distribution with parameter $\lambda$ is $\lambda$.)
 \end{itemize}
 \end{frame}
 
@@ -1563,13 +1564,17 @@ each event is classified as type 1 with probability $p$ or type 2 with probabili
 Then the arrival of type 1 and type 2 events are both Poisson processes with rate $p\cdot\lambda$ and $(1-p)\cdot\lambda$.
 And the two processes are independent.
 \end{pty}
+\begin{itemize}
+\item Let $\mathbb{N}_1$ be the process of type 1 event, 
+$N_1(k)$ is the number of type 1 events that occur by time $k$. (same for $\mathbb{N}_2$)
+\item $\mathbb{N}_1$ and $\mathbb{N}_2$ are said to be independent if $N_1(s_1+t_1) - N_1(s_1)$ and $N_2(s_2+t_2) - N(s_2)$ are independent for all $s_1, t_1, s_2, t_2$.
+\end{itemize}
 \end{frame}
 
 \begin{frame}{Proof}
-Let $\mathbb{N}_1$ be the process of type 1 event, 
-$N_1(k)$ is the number of type 1 events that occur by time $k$.\\
+We first prove that $\mathbb{N}_1$ is a Poisson process with rate $\lambda p$.\\
 \vspace{\baselineskip}
-\textbf{Stationary increments}:\\
+\textbf{Stationary increments}:
 \[
 P(N_1(s+t) - N_1(s) = k_1 | N(s+t) - N(s) = k) = \binom{k}{k_1}\cdot p^{k_1}\cdot (1-p)^{k-k_1}
 \]
@@ -1586,14 +1591,69 @@ which has nothing to do with $s$.
 Let $(s,s+t)$ and $(u,u+v)$ be two non-overlapping time intervals,
 \begin{align*}
 & P(N_1(s+t)-N_1(s)=k_1, N_1(u+v)-N_1(u)=\ell_1) \\
-= & \sum_{k\geq 0}\sum_{\ell\geq 0} P(N_1(s+t)-N_1(s)=k_1, N_1(u+v)-N_1(u)=\ell_1 \\
+& = \sum_{k\geq 0}\sum_{\ell\geq 0} P(N_1(s+t)-N_1(s)=k_1, N_1(u+v)-N_1(u)=\ell_1 \\
 & \qquad | N(s+t)-N(s)=k, N(u+v)-N(u)=\ell) \\
 & \qquad \cdot P(N(s+t)-N(s)=k, N(u+v)-N(u)=\ell) \\
-= & \sum_{k\geq 0}\sum_{\ell\geq 0} P(N_1(s+t)-N_1(s)=k_1 | N(s+t)-N(s)=k) \\
+& = \sum_{k\geq 0}\sum_{\ell\geq 0} P(N_1(s+t)-N_1(s)=k_1 | N(s+t)-N(s)=k) \\
 & \qquad\cdot P(N_1(u+v)-N_1(u)=\ell_1 | N(u+v)-N(u)=\ell) \\
 & \qquad\cdot P(N(s+t)-N(s)=k)\cdot P(N(u+v)-N(u)=\ell) \\
-= & P(N_1(s+t)-N_1(s)=k_1)\cdot P(N_1(u+v)-N_1(u)=\ell_1)
+& = P(N_1(s+t)-N_1(s)=k_1)\cdot P(N_1(u+v)-N_1(u)=\ell_1)
 \end{align*}
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+\textbf{Conditions on page \pageref{operation_def}}:
+\begin{align*}
+\textbf{1. } P(N_1(t)\geq 2) & \leq P(N(t)\geq 2) = o(t) \\
+\textbf{2. } P(N_1(t)=1) & = P(N_1(t)=1 | N(t)=1)\cdot P(N(t)=1) \\
+& \qquad + P(N_1(t)=1 | N(t)\geq 2)\cdot P(N(t)\geq 2) \\
+& = p\cdot (\lambda t + o(t)) + o(t) \\
+& = p\lambda t + o(t)
+\end{align*}
+Hence we know that $\mathbb{N}_1$ is a Poisson process with rate $\lambda p$.
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+\textbf{$\mathbb{N}_1$ and $\mathbb{N}_2$ are independent}:
+\begin{align*}
+& P(N_1(t) = i, N_2(t) = j) \\
+& = P(N_1(t) = i, N_2(t) = j | N(t) = i+j)\cdot P(N(t) = i+j) \\
+& = \binom{i+j}{i}\cdot p^i\cdot (1-p)^j\cdot \frac{e^{-\lambda t}\cdot (\lambda t)^{i+j}}{(i+j)!} \\
+& = \frac{e^{-\lambda pt}\cdot (\lambda pt)^i}{i!}\cdot \frac{e^{-\lambda (1-p)t}\cdot (\lambda (1-p)t)^j}{j!} \\
+& = P(N_1(t)=i)\cdot P(N_2(t)=j)
+\end{align*}
+We only prove for two intervals that have the same length here.
+\end{frame}
+
+\begin{frame}{Example 1}
+$\mathbb{N}$ has rate $10$ and $p = 1/12$,
+\[
+P(N_1(4) = 0) = \frac{e^{-\frac{40}{12}}\cdot (\frac{40}{12})^0}{0!} = e^{-\frac{10}{3}}
+\]
+\end{frame}
+
+\begin{frame}{Example 2: Type transitions}
+There're $r$ classes of particles.
+\begin{itemize}
+\item $Y_i(k)$ is the number of class $i$ particles at time $k$.
+\item The time is discrete in this case.
+\item $Y_i(0)$ is Poisson distributed with parameter $\lambda_i$.
+\item $P_{ij}$ is the transition probability for a class $i$ particle to class $j$.
+\end{itemize}
+We prove that $Y_j(n)$ is Poisson distributed with parameter $\sum_{i=1}^r P^n_{ij}\cdot \lambda_i$.
+\end{frame}
+
+\begin{frame}{Proof}
+Take class $i$ for example, we consider a Poisson process $\mathbb{N}$ with rate $\lambda_i$,
+where each event is classified as type $k$ with probability $P^n_{ik}$. \\
+\vspace{\baselineskip}
+For an arbitrary unit time interval, the number of events that occur in this interval is Poisson distributed with parameter $\lambda_i$.
+We take this Poisson distributed number as the value of $Y_i(0)$. \\
+\vspace{\baselineskip}
+By property 1, we know that the number of type $k$ events in this interval is Poisson distributed with parameter $P^n_{ik}\cdot \lambda_i$, which also means that the number of class $i$ particles that eventually become class $k$ at time $n$, which is denoted as $C^n_{ik}$, is also Poisson distributed with parameter $P^n_{ik}\cdot \lambda_i$. \\
+\vspace{\baselineskip}
+$Y_j(n) = \sum_i C^n_{ij}$, which is Poisson distributed with parameter $\sum_{i=1}^r P^n_{ij}\cdot \lambda_i$. \\
+(since the Poisson parameter can be summed up.)
 \end{frame}
 
 \end{document}
