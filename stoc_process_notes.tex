@@ -1656,5 +1656,32 @@ $Y_j(n) = \sum_i C^n_{ij}$, which is Poisson distributed with parameter $\sum_{i
 (since the Poisson parameter can be summed up.)
 \end{frame}
 
+\begin{frame}{Example 3: Selling a product}
+Consider a Poisson process with rate $\lambda$, where each event is an offer that has density function $f(x)$.\\
+A product is sold if an offer with value higher than the price $y$ comes.\\
+Assume the accepted offer comes at time $t$, then the storage cost is $c\cdot t$, where $c$ is a constant decided by the product.\\
+\vspace{\baselineskip}
+We want to know the expected profit, which is $E[f(x)-ct | f(x)\geq y]$.
+\end{frame}
+
+\begin{frame}{Solution}
+The probability for each offer being accepted is
+\[
+p(y) = P(X\geq y) = \int_y^\infty f(x)\; dx
+\]
+The expectation of storage time $t$ is $1/(\lambda\cdot p(y))$.\\
+Hence,
+\begin{align*}
+& E[f(x) | f(x)\geq y] - E[ct | f(x)\geq y] \\
+& = \int_0^\infty x\cdot f_{X|X\geq y}(x)\; dx - \frac{c}{\lambda\cdot p(y)} \\
+& = \int_y^\infty x\cdot \frac{f_X(x)}{P(X\geq y)}\; dx - \frac{c}{\lambda\cdot p(y)} \\
+& = \frac{1}{p(y)}\left( \int_y^\infty x\cdot f(x)\; dx - \frac{c}{\lambda} \right)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Example 4: Coupon collection}
+
+\end{frame}
+
 \end{document}
 
