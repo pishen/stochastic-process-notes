@@ -1557,7 +1557,7 @@ So,
 \end{align*}
 \end{frame}
 
-\begin{frame}{Property 1}
+\begin{frame}{Property 1 (Different types of events)}
 \begin{pty}
 Let $\mathbb{N}$ be a Poisson process with rate $\lambda$, 
 each event is classified as type 1 with probability $p$ or type 2 with probability $1-p$.\\
@@ -1680,7 +1680,80 @@ Hence,
 \end{frame}
 
 \begin{frame}{Example 4: Coupon collection}
+There are $r$ types of coupons, and $p_i$ is the probability for a collected coupon being type $i$.\\
+\vspace{\baselineskip}
+We want to know the expectation of $N$, where $N$ is the number of collected coupons so that all $r$ types of coupons are collected.
+\end{frame}
 
+\begin{frame}{Solution: First attempt}
+Let $N_i$ be the number of coupons collected to receive the first type $i$ coupon.
+We know that
+\[
+E[N] = E[\max(N_1, N_2, \ldots, N_r)]
+\]
+And
+\[
+P(N\leq n) = P(N_1\leq n, N_2\leq n, \cdots, N_r\leq n)
+\]
+But since each $N_i$ are not independent, we can't go even further from here.\\
+For example, given that $N_1 = 1$, $P(N_2 = 1|N_1 = 1) = 0$.
+\end{frame}
+
+\begin{frame}{Solution: Second attempt}
+Without loss of generality, we assume that the coupons arrive as a Poisson process $\mathbb{N}$ with rate $1$.\\
+$\mathbb{N}_i$ is the process of type $i$ coupons, which has rate $p_i$.\\
+$X_i$ is the time that the first type $i$ coupon appears, and
+\[
+X = \max(X_1, X_2, \ldots, X_r)
+\]
+$X_1, X_2, \ldots, X_r$ are independent since $\mathbb{N}_1, \mathbb{N}_2, \ldots, \mathbb{N}_r$ are independent.
+\end{frame}
+
+\begin{frame}{Solution: Second attempt (cont.)}
+We can see that
+\begin{align*}
+P(X\leq t) & = P(X_1\leq t, X_2\leq t, \cdot, X_r\leq t) \\
+& = \prod_{i=1}^r P(X_i\leq t) = \prod_{i=1}^r (1 - e^{-t\cdot p_i})
+\end{align*}
+And
+\[
+E[X] = \int_0^\infty P(X > t)\; dt = \int_0^\infty 1 - \prod_{i=1}^r (1 - e^{-t\cdot p_i})\; dt
+\]
+The first equation is from the property of probability.\\
+Surprisingly, $E[X] = E[N]$ as explained below.
+\end{frame}
+
+\begin{frame}{Solution: Second attempt (cont.)}
+\[
+X = T_1 + T_2 + \cdots + T_N
+\]
+where $T_j$ is the $j$th inter-arrival time of $\mathbb{N}$.\\
+Each $T_j$ are i.i.d.\ and are exponential distributed with rate $1$.\\
+Also, $N$ is independent with each $T_j$.
+\[
+E[X|N=n] = E[T_1 + T_2 + \cdots + T_n] = n\cdot E[T_1] = n
+\]
+\[
+E[X|N] = N\cdot E[T_1] = N
+\]
+Hence,
+\[
+E[X] = E[E[X|N]] = E[N]
+\]
+\end{frame}
+
+\begin{frame}{Property 2 (simple version)}
+\begin{pty}
+Given that exactly one event of a Poisson process arrives in the interval $[0,t]$,
+this arrival time is uniformly distributed over $[0,t]$.
+\end{pty}
+\textbf{Proof}:
+\begin{align*}
+P(T_1\leq s | N(t)=1) & = \frac{P(T_1\leq s, N(t)=1)}{P(N(t)=1)} \\
+& = \frac{P(N(s)=1)\cdot P(N(t)-N(s)=0)}{e^{-\lambda t}\cdot (\lambda t)^1 / 1!}\\
+& = \frac{e^{-\lambda s}\cdot \lambda s \cdot e^{-\lambda(t-s)}}{e^{-\lambda t}\cdot \lambda t}
+= \frac{s}{t}
+\end{align*}
 \end{frame}
 
 \end{document}
