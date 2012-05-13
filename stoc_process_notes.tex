@@ -1610,7 +1610,8 @@ Let $(s,s+t)$ and $(u,u+v)$ be two non-overlapping time intervals,
 & = p\cdot (\lambda t + o(t)) + o(t) \\
 & = p\lambda t + o(t)
 \end{align*}
-Hence we know that $\mathbb{N}_1$ is a Poisson process with rate $\lambda p$.
+Hence we know that $\mathbb{N}_1$ is a Poisson process with rate $\lambda p$.\\
+\textcolor{red}{Seems like we can also derive this from the result of next page and omit this page's proof? (By Example 3.23 on textbook?)}
 \end{frame}
 
 \begin{frame}{Proof (cont.)}
@@ -1622,7 +1623,8 @@ Hence we know that $\mathbb{N}_1$ is a Poisson process with rate $\lambda p$.
 & = \frac{e^{-\lambda pt}\cdot (\lambda pt)^i}{i!}\cdot \frac{e^{-\lambda (1-p)t}\cdot (\lambda (1-p)t)^j}{j!} \\
 & = P(N_1(t)=i)\cdot P(N_2(t)=j)
 \end{align*}
-We only prove for two intervals that have the same length here.
+We only prove for two intervals that have the same length here.\\
+\textcolor{red}{This also prove that $N_1(t)$ and $N_2(t)$ are Poisson distributed over $t$ (Example 3.23 on textbook).}
 \end{frame}
 
 \begin{frame}{Example 1}
@@ -1745,7 +1747,7 @@ E[X] = E[E[X|N]] = E[N]
 \]
 \end{frame}
 
-\begin{frame}{Property 2 (simple version)}
+\begin{frame}{Property 2-simple (Distribution of one event)}
 \begin{pty}
 Given that exactly one event of a Poisson process arrives in the interval $[0,t]$,
 this arrival time is uniformly distributed over $[0,t]$.
@@ -1757,6 +1759,98 @@ P(T_1\leq s | N(t)=1) & = \frac{P(T_1\leq s, N(t)=1)}{P(N(t)=1)} \\
 & = \frac{e^{-\lambda s}\cdot \lambda s \cdot e^{-\lambda(t-s)}}{e^{-\lambda t}\cdot \lambda t}
 = \frac{s}{t}
 \end{align*}
+\end{frame}
+
+\begin{frame}{Property 2-advanced (Distribution of several events)}
+\begin{pty}
+Given that exactly $n$ events of a Poisson process arrive in the interval $[0,t]$,
+each with arrival time $X_1, X_2, \ldots, X_n$.\\
+The order statistics $X_{(1)}, X_{(2)}, \ldots, X_{(n)}$ of these random variables have the joint density function
+\begin{align*}
+& f_{X_{(1)}, X_{(2)}, \ldots, X_{(n)}}(x_1, x_2, \ldots, x_n | N(t)=n) \\
+& = \left\{
+\begin{array}{l l}
+\frac{n!}{t^n} & \quad\text{if } 0 < x_1 < x_2 < \cdots < x_n < t \\
+0 & \quad\text{otherwise} \\
+\end{array}
+\right.
+\end{align*}
+\end{pty}
+\begin{itemize}
+\item This implies that $X_1, X_2, \ldots, X_n$ are i.i.d.\ and each is uniformly distributed over $[0,t]$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Proof}
+For any $0 < x_1 < x_2 < \ldots < x_n < t$,
+\begin{align*}
+& f_{X_{(1)}, X_{(2)}, \ldots, X_{(n)}}(x_1, x_2, \ldots, x_n | N(t)=n) \\
+& = \frac{f_{X_{(1)}, X_{(2)}, \ldots, X_{(n)}, N(t)}(x_1, x_2, \ldots, x_n, n)}{P(N(t) = n)} \\
+& = \frac{f_{T_1, T_2, \ldots, T_n}(x_1, x_2 - x_1, \ldots, x_n - x_{n-1})\cdot P(T_{n+1} > t - x_n)}{P(N(t) = n)} \\
+& = \frac{\lambda e^{-\lambda x_1}\cdot\lambda e^{-\lambda(x_2-x_1)}\cdots\lambda e^{-\lambda(x_n-x_{n-1})}\cdot e^{\lambda(t-x_n)}}{\frac{e^{-\lambda t}(\lambda t)^n}{n!}} \\
+& = \frac{n!}{t}
+\end{align*}
+$T_i$ are the inter-arrival times, which are exponential distributed.
+\end{frame}
+
+\begin{frame}{Corollary of property 2 (simple version)}
+\begin{corollary}
+Consider a Poisson process with rate $\lambda$.\\
+Each event is classified into a type $i$, where there are $r$ types of event. \\
+Suppose that $p_i(\cdot)$ is a sampling function over interval $[0,t]$ such that
+each arrived event at time $x$ has probability $p_i(x)$ to be classified as type $i$.\\
+Then the number $N_i(t)$ of type $i$ events in $[0,t]$ is Poisson distributed with parameter
+\[
+\lambda \int_0^t p_i(x)\; dx = \lambda\cdot t\cdot R_i \quad\text{,where }R_i = \frac{1}{t}\int_0^t p_i(x)\; dx
+\]
+\end{corollary}
+\begin{itemize}
+\item $N_i(\cdot)$ does not form a Poisson process here. \\
+It doesn't satisfy stationary distribution because of $p_i(\cdot)$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Proof}
+Assume that $N(t)=n$. \\
+Let $n = n_1 + n_2 + \cdots + n_r$, where $n_i \geq 0 ~\forall i=1,\ldots,r$.\\
+These $n$ events arrive independent and uniformly at random over $[0,t]$.\\
+If an event arrives at time $x \in [0,t]$, then with probability $p_i(x)$ it becomes type $i$.
+Therefore, each event is of type $i$ with probability
+\begin{align*}
+& \int_0^t P(\text{type } i | \text{arrives at time } x)\cdot \frac{1}{t} \; dx \\
+& = \frac{1}{t} \int_0^t p_i(x)\; dx \\
+& = R_i
+\end{align*}
+which can be seen as the average of $p_i(\cdot)$ over $[0,t]$.
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+\begin{align*}
+P(\bigwedge_{1\leq i\leq r} N_i(t) = n_i) & = P(\bigwedge_{1\leq i\leq r} N_i(t) = n_i | N(t)=n)\cdot P(N(t)=n)\\
+& = \left( \frac{n!}{n_1! n_2!\cdots n_r!}\cdot \prod_{1\leq i\leq r}{R_i}^{n_i} \right)
+\cdot \frac{e^{-\lambda t}\cdot(\lambda t)^n}{n!}\\
+& = \prod_{1\leq i\leq r}\frac{e^{-\lambda t R_i}(\lambda t R_i)^{n_i}}{n_i!}\\
+& = \prod_{1\leq i\leq r}P(N_i(t) = n_i)
+\end{align*}
+Hence we know that each $N_i(t)$ is Poisson distributed with parameter $\lambda t R_i$ and are independent.
+(Check Example 3.23 on textbook.)
+\end{frame}
+
+\begin{frame}{Corollary of property 2 (full version)}
+\begin{corollary}
+Consider a Poisson process with rate $\lambda$.\\
+Each event is classified into a type $i$, where there are $r$ types of event. \\
+Suppose that $p_i(\cdot)$ is a sampling function over interval $[s,s+t]$ such that
+each arrived event at time $x$ has probability $p_i(x)$ to be classified as type $i$.\\
+Then the number $N_i(s+t)-N_i(s)$ of type $i$ events in $[s,s+t]$ is Poisson distributed with parameter
+\[
+\lambda \int_0^t p_i(x)\; dx
+\]
+\end{corollary}
+\end{frame}
+
+\begin{frame}{Proof}
+
 \end{frame}
 
 \end{document}
