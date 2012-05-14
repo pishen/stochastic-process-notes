@@ -1844,12 +1844,58 @@ Suppose that $p_i(\cdot)$ is a sampling function over interval $[s,s+t]$ such th
 each arrived event at time $x$ has probability $p_i(x)$ to be classified as type $i$.\\
 Then the number $N_i(s+t)-N_i(s)$ of type $i$ events in $[s,s+t]$ is Poisson distributed with parameter
 \[
-\lambda \int_0^t p_i(x)\; dx
+\lambda \int_s^{s+t} p_i(x)\;dx
 \]
 \end{corollary}
 \end{frame}
 
 \begin{frame}{Proof}
+Regarding $[s, s+t]$ as $[0,t]$, the sampling function becomes
+\[
+p'_i(x) = p_i(x+s)
+\]
+From the simple version, we know that $N_i(s+t)-N_i(s)$ is Poisson distributed with parameter
+\[
+\lambda\int_0^t p'_i(x)\;dx = \lambda\int_0^t p_i(x+s)\;dx = \lambda\int_s^{s+t} p_i(x)\;dx
+\]
+\end{frame}
+
+\begin{frame}{Example 1: Infinite server queue}
+\begin{center}
+\includegraphics[scale=0.13]{server.png}
+\end{center}
+Suppose that jobs arrive at a Poisson rate $\lambda$, and we have infinite number of servers.
+The running time of each job is independent and distributed with function $T(\cdot)$.
+We want to know
+\begin{enumerate}
+\item The distribution of the number $X(t)$ of completed jobs by time $t$.
+\item The distribution of the number $Y(t)$ of running jobs by time $t$.
+\item The joint distribtuion of $Y(t_1)$ and $Y(t_2)$, where $t_1 < t_2$.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Solution of question 1 \& 2}
+We classify the jobs into two types:
+\begin{itemize}
+\item \textbf{type 1}: completed by time $t$.
+\item \textbf{type 2}: not completed by time $t$.
+\end{itemize}
+If a job arrives at time $x$, then the sampling function is
+\begin{itemize}
+\item $p_1(x) = T(t-s)$
+\item $p_2(x) = 1 - T(t-s)$
+\end{itemize}
+Thus, $X(t) = N_1(t)$ is Poisson distributed with parameter
+\[
+\lambda\int_0^t T(t-x)\;dx
+\]
+And $Y(t) = N_2(t)$ is Poisson distributed with parameter
+\[
+\lambda\int_0^t (1-T(t-x))\;dx = \lambda t - \lambda\int_0^t T(t-x)\;dx
+\]
+\end{frame}
+
+\begin{frame}{Solution of question 3}
 
 \end{frame}
 
