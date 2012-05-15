@@ -1882,8 +1882,8 @@ We classify the jobs into two types:
 \end{itemize}
 If a job arrives at time $x$, then the sampling function is
 \begin{itemize}
-\item $p_1(x) = T(t-s)$
-\item $p_2(x) = 1 - T(t-s)$
+\item $p_1(x) = T(t-x)$
+\item $p_2(x) = 1 - T(t-x)$
 \end{itemize}
 Thus, $X(t) = N_1(t)$ is Poisson distributed with parameter
 \[
@@ -1896,7 +1896,89 @@ And $Y(t) = N_2(t)$ is Poisson distributed with parameter
 \end{frame}
 
 \begin{frame}{Solution of question 3}
+\begin{center}
+\includegraphics[scale=1.0]{infinite_server}
+\end{center}
+\begin{align*}
+p_1(x) & = T(t_2-x) - T(t_1-x) \quad\text{if } 0 < x < t_1 \\
+p_2(x) & = 1 - T(t_2-x) \quad\text{if } 0 < x < t_1 \\
+p_3(x) & = 1 - T(t_2-x) \quad\text{if } t_1 < x < t_2
+\end{align*}
+\end{frame}
 
+\begin{frame}{Solution of question 3 (cont.)}
+We know that $Y(t_1) = N_1(t_2) + N_2(t_2)$ and $Y(t_2) = N_2(t_2) + N_3(t_2)$, \\
+hence $Y(t_1)$ and $Y(t_2)$ are not independent.
+Therefore, we use the following method:
+\begin{align*}
+& P(Y(t_1) = m_1, Y(t_2) = m_2) \\
+& = \sum_{n_2 = 0}^\infty P(N_1(t_2) = m_1-n_2, N_2(t_2) = n_2, N_3(t_2) = m_2-n_2) \\
+& = \sum_{n_2 = 0}^\infty P(N_1(t_2) = m_1-n_2)\cdot P(N_2(t_2) = n_2)\cdot P(N_3(t_2) = m_2-n_2) \\
+& = \cdots
+\end{align*}
+The $\infty$ in $\sum$ can be replaced by $\min(m_1, m_2)$.
+\end{frame}
+
+\begin{frame}{Example 2: Encounters on a highway}
+\begin{center}
+\includegraphics[scale=1]{highway_scale.jpg}
+\end{center}
+Cars enter a distance-$d$ highway in a Poisson rate $\lambda$.\\
+The fixed speed of each car is i.i.d.\ with function $F_S(\cdot)$.\\
+Suppose our car enters the highway and moves at a fixed speed $s$,
+what's the distribution of the number of encountering with other cars?
+\end{frame}
+
+\begin{frame}{Solution}
+Suppose we enter at time $t_1$ and leave at $t_2 = t_1 + d/s$.\\
+Each car choose a fixed speed $S$ according to $F_S$, its travel time $T = d/S$.\\
+The distribution function of $T$ is
+\[
+F_T(t) = P(T\leq t) = P(S\geq \frac{d}{t}) = 1 - F_S(\frac{d}{t})
+\]
+We classify the cars into three types:
+\begin{itemize}
+\item \textbf{type a} (overtaken by us): $0 < t < t_1$, $t + T > t_2$.
+\item \textbf{type b} (overtake us): $t_1 < t < t_2$, $t + T < t_2$.
+\item \textbf{type c}: otherwise
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Solution (cont.)}
+\begin{align*}
+p_a(t) & = P(T > t_2 - t) = 1 - F_T(t_2 - t) \quad\text{if } 0 < t < t_1 \\
+p_b(t) & = P(T < t_2 - t) = F_T(t_2 - t) \quad\text{if } t_1 < t < t_2
+\end{align*}
+Since the Poisson parameters can be summed up, $N_a(t_2) + N_b(t_2)$ is Poisson distributed with parameter
+\[
+\lambda\int_0^{t_1} (1 - F_T(t_2 - t))\;dt + \lambda\int_{t_1}^{t_2} F_T(t_2 - t)\;dt
+\]
+which is the distribution we want.
+\end{frame}
+
+\begin{frame}{Example 3: HIV infection}
+\begin{center}
+\includegraphics[scale=0.25]{hiv.jpg}
+\end{center}
+People are infected with an unknown Poisson rate $\lambda$.\\
+The incubation time for each infected person has distribution function $F$.\\
+At time $t$, we know the number $n_1$ of people who already have the AIDS symptoms (finished incubations).\\
+We want to estimate the value of $\lambda$, and the number $n_2$ of the incubating people at time $t$.
+\end{frame}
+
+\begin{frame}{Solution}
+We classify the infected people into two types:
+\begin{itemize}
+\item \textbf{type 1}: have symptoms appear by time $t$.
+\item \textbf{type 2}: still in incubation by time $t$.
+\end{itemize}
+Then
+\begin{align*}
+E[N_1(t)] & = \lambda\int_0^t F(t-x)\;dx = \lambda\int_0^t F(x)\;dx \\
+E[N_2(t)] & = \lambda\int_0^t (1-F(t-x))\;dx = \lambda\int_0^t (1-F(x))\;dx \\
+n_1 & \approx E[N_1(t)] \implies \hat{\lambda} = \frac{n_1}{\int_0^t F(x)\;dx} \\
+n_2 & \approx \hat{\lambda}\int_0^t (1-F(x))\;dx = \frac{n_1\int_0^t (1-F(x))\;dx}{\int_0^t F(x)\;dx}
+\end{align*}
 \end{frame}
 
 \end{document}
