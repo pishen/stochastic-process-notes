@@ -1803,6 +1803,7 @@ Then the number $N_i(t)$ of type $i$ events in $[0,t]$ is Poisson distributed wi
 \[
 \lambda \int_0^t p_i(x)\; dx = \lambda\cdot t\cdot R_i \quad\text{,where }R_i = \frac{1}{t}\int_0^t p_i(x)\; dx
 \]
+And each $N_i(t)$ for all $i$ are independent.
 \end{corollary}
 \begin{itemize}
 \item $N_i(\cdot)$ does not form a Poisson process here. \\
@@ -1846,6 +1847,7 @@ Then the number $N_i(s+t)-N_i(s)$ of type $i$ events in $[s,s+t]$ is Poisson dis
 \[
 \lambda \int_s^{s+t} p_i(x)\;dx
 \]
+And each $N_i(s+t)-N_i(s)$ for all $i$ are independent.
 \end{corollary}
 \end{frame}
 
@@ -1979,6 +1981,157 @@ E[N_2(t)] & = \lambda\int_0^t (1-F(t-x))\;dx = \lambda\int_0^t (1-F(x))\;dx \\
 n_1 & \approx E[N_1(t)] \implies \hat{\lambda} = \frac{n_1}{\int_0^t F(x)\;dx} \\
 n_2 & \approx \hat{\lambda}\int_0^t (1-F(x))\;dx = \frac{n_1\int_0^t (1-F(x))\;dx}{\int_0^t F(x)\;dx}
 \end{align*}
+\end{frame}
+
+\begin{frame}{Example 4: Hidden bugs}
+\begin{center}
+\includegraphics[scale=0.3]{bug.png}
+\end{center}
+Suppose the errors come as a Poisson process.\\
+Each error belongs to one of the $m$ bugs in the program.\\
+For all $i = 1,\ldots, m$, $\mathbb{N}_i$ denotes the Poisson process of errors caused by bug $i$, which has an unknown rate $\lambda_i$.\\
+At time $t$, we know the value of $M_j(t)$, which is the number of bugs causing exactly $j$ errors.\\
+And a bug is still \textit{hidden} if it hasn't cause any error.\\
+We want to know the expected error rate of hidden bugs, 
+which is the expectation of the summation of all hidden bugs' $\lambda_i$.
+\end{frame}
+
+\begin{frame}{Solution}
+Let
+\begin{align*}
+H_i(t) & = \left\{
+\begin{array}{l l}
+1 & \quad\text{if the $i$th bug is still hidden by time $t$} \\
+0 & \quad\text{otherwise} \\
+\end{array}
+\right. \\
+\Lambda(t) & = \sum_{i=1}^m H_i(t)\cdot \lambda_i
+\end{align*}
+Then
+\begin{align*}
+& P(H_i(t)=1) = P(N_i(t)=0) = \frac{(\lambda_i t)^0 \cdot e^{-\lambda_i t}}{0!} = e^{-\lambda_i t} \\
+& E[\Lambda(t)] = \sum_{i=1}^m \lambda_i\cdot E[H_i(t)]
+	= \sum_{i=1}^m \lambda_i\cdot P(H_i(t) = 1) = \sum_{i=1}^m \lambda_i\cdot e^{-\lambda_i t} \\
+&\qquad = \frac{1}{t}\sum_{i=1}^m \lambda_i\cdot t\cdot e^{-\lambda_i t} = \frac{1}{t}\sum_{i=1}^m P(N_i(t) = 1)
+	= \frac{1}{t} E[M_1(t)]
+\end{align*}
+\end{frame}
+
+\begin{frame}{Non-homogeneous Poisson process}
+\begin{definition}
+$\mathbb{N}$ is a non-homogeneous Poisson process with intensity function $\lambda(\cdot)$ if
+$\mathbb{N}$ is a counting process such that the following four conditions hold:
+\begin{enumerate}
+\item $N(0) = 0$
+\item $\mathbb{N}$ satisfies independent increments.
+\item $P(N(t+h)-N(t) \geq 2) = o(h)$
+\item $P(N(t+h)-N(t) = 1) = \lambda(t)\cdot h + o(h)$
+\end{enumerate}
+\end{definition}
+\begin{itemize}
+\item It's a Poisson process without stationary increments.
+\item If $\lambda(t) = \lambda$, it becomes the homogeneous (normal) Poisson process.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Proposition 1}
+\textbf{Part 1}:\\
+For a Poisson process $\mathbb{N}$ with rate $\lambda$,
+suppose that each arrived event has sampling function $p_i(t)$,
+then the counting process $\mathbb{N}_i$ describing the arrival of type-$i$ events
+is a non-homogeneous Poisson process with intensity function 
+\[
+\lambda_i(t) = \lambda\cdot p_i(t)
+\]
+\textbf{Part 2}:\\
+All non-homogeneous Poisson process with bounded $\lambda(\cdot)$ can be obtained in the above way.\\
+\textbf{Proof of part 2}: 
+Since there's a $\lambda$ that $\lambda(t)\leq \lambda$ for all $t$, 
+we just let $p_i(t) = \lambda(t) / \lambda$ for a Poisson process with rate $\lambda$.
+\end{frame}
+
+\begin{frame}{Proof of part 1}
+\textbf{Condition 1}: trivial.\\
+\textbf{Condition 3}:
+\[
+P(N_i(t+h)-N_i(t)\geq 2)\leq P(N(t+h)-N(t)\geq 2) = o(h)
+\]
+\textbf{Condition 4}:
+\begin{align*}
+& P(N_i(t+h)-N_i(t) = 1) \\
+= & \colorbox{yellow}{$P(N_i(t+h)-N_i(t) = 1 | N(t+h)-N(t) = 1)$} \\
+& \qquad \times \colorbox{green}{$P(N(t+h)-N(t) = 1)$} \\
+& \qquad + P(N_i(t+h)-N_i(t) = 1 | N(t+h)-N(t)\geq 2) \\
+& \qquad \times \colorbox{cyan}{$P(N(t+h)-N(t)\geq 2)$} \\
+= & \colorbox{yellow}{$(p_i(t) + o(h))$}\cdot \colorbox{green}{$(\lambda h + o(h))$} + \colorbox{cyan}{$o(h)$} \\
+= & p_i(t)\cdot \lambda h + o(h)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Proof of part 1 (cont.)}
+The \colorbox{yellow}{yellow} part holds because
+\begin{align*}
+& \lim_{h\to 0} P(N_i(t+h)-N_i(t) = 1 | N(t+h)-N(t) = 1) = p_i(t) \\
+\implies & P(N_i(t+h)-N_i(t) = 1 | N(t+h)-N(t) = 1) = p_i(t) + o(h)
+\end{align*}
+\textbf{Condition 2}:\\
+Consider non-overlapped intervals $[s,s+t]$ and $[u,u+v]$, 
+the distribution in each interval is decided by Poisson parameter $\lambda\int_s^{s+t} p_i(x)\;dx$ and $\lambda\int_u^{u+v} p_i(x)\;dx$, which doesn't influence each other.
+\end{frame}
+
+\begin{frame}{Distribution of non-homogeneous Poisson process}
+According to part 2 of proposition 1, 
+for a non-homogeneous Poisson process with intensity function $\lambda(\cdot)$,
+we can observe that its distribution in $[s,s+t]$ is Poisson distributed with parameter
+\[
+\lambda\int_s^{s+t} p_i(x)\;dx = \int_s^{s+t} \lambda(x)\;dx
+\]
+\end{frame}
+
+\begin{frame}{Example 1: Poisson tea shop}
+Suppose that customers come to tea shop as a non-homogeneous Poisson process with $\lambda(t)$ as follow:
+\[
+\lambda(t) = \left\{
+\begin{array}{l l}
+0 & 0\leq t\leq 8 \\
+5 + 5\cdot(t-8) & 8 < t\leq 11 \\
+20 & 11 < t < 13 \\
+20 - 2\cdot(t-13) & 13 < t\leq 17 \\
+0 & 17 < t < 24 \\
+\end{array}
+\right.
+\]
+We want to know the probability that no one comes in $[8.5,9.5]$.
+\end{frame}
+
+\begin{frame}{Solution}
+The distribution in $[8.5,9.5]$ is a Poisson with parameter
+\[
+\int_{8.5}^{9.5} (5+5\cdot(t-8))\;dt = \int_{0.5}^{1.5} (5+5t)\;dt = 10
+\]
+Hence the probability is $e^{-10}$.
+\end{frame}
+
+\begin{frame}{Example 2: Infinite server queue again}
+\begin{center}
+\includegraphics[scale=0.13]{server.png}
+\end{center}
+Suppose that jobs arrive at a Poisson rate $\lambda$, and we have infinite number of servers.
+The running time of each job is independent and distributed with function $T(\cdot)$.\\
+We want to prove that the process of jobs departing (finishing) is a non-homogeneous Poisson process.
+\end{frame}
+
+\begin{frame}{Proof}
+\textbf{Condition 1}: trivial.\\
+\vspace{\baselineskip}
+\textbf{Condition 2}:\\
+Consider two non-overlapping intervals $[s,s+t]$ and $[u,u+v]$, where $u > s$.
+Let the jobs finishing in $[s,s+t]$ be type 1, and those finishing in $[u,u+v]$ be type 2.\\
+According to corollary of property 2, we know that the distribution of type 1 and type 2 jobs are independent in $[0,u+v]$, which means that the number of jobs finishing in $[s,s+t]$ and $[u,u+v]$ are independent.
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+
 \end{frame}
 
 \end{document}
