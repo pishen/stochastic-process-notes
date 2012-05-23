@@ -2117,7 +2117,7 @@ Hence the probability is $e^{-10}$.
 \includegraphics[scale=0.13]{server.png}
 \end{center}
 Suppose that jobs arrive at a Poisson rate $\lambda$, and we have infinite number of servers.
-The running time of each job is independent and distributed with function $T(\cdot)$.\\
+The running time of each job is independent and distributed with function $F(\cdot)$.\\
 We want to prove that the process of jobs departing (finishing) is a non-homogeneous Poisson process.
 \end{frame}
 
@@ -2131,7 +2131,54 @@ According to corollary of property 2, we know that the distribution of type 1 an
 \end{frame}
 
 \begin{frame}{Proof (cont.)}
+\textbf{Condition 3 \& 4}:
+Let $f(\cdot)$ be the density function of $F(\cdot)$.
+The number of jobs departing in $[t,t+h]$ is Poisson distributed with parameter
+\begin{align*}
+& \lambda\int_0^{t+h}(F(t+h-x)-F(t-x))\;dx \\
+= & \lambda\int_0^{t+h}(f(t+h-x)\cdot h + o(h))\;dx \\
+= & \left( \lambda h \int_0^{t+h} f(x)\;dx \right) + o(h) \\
+= & \lambda h\cdot F(t+h) + o(h) \\
+= & \lambda h\cdot F(t) + o(h)
+\end{align*}
+\end{frame}
 
+\begin{frame}{Proof (cont.)}
+The first equation is because
+\[
+\lim_{h\to 0}\frac{F(t+h-x)-F(t-x)}{h} = f(t-x) = \lim_{h\to 0}f(t-x+h)
+\]
+Then we know that
+\begin{align*}
+& P(N(t+h)-N(t) = 1) \\
+= & (\lambda h\cdot F(t) + o(h))\cdot e^{-\lambda h\cdot F(t) + o(h)} \\
+= & (\lambda h\cdot F(t) + o(h))\cdot (1 - \lambda h\cdot F(t) + o(h)) \\
+= & \lambda h\cdot F(t) + o(h) \\
+\text{and}\qquad & P(N(t+h)-N(t)\geq 2) \\
+= & \sum_{k\geq 2}\frac{(\lambda h\cdot F(t) + o(h))^k \cdot e^{-\lambda h\cdot F(t) + o(h)}}{k!} \\
+= & o(h)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Proposition 2}
+If $\mathbb{N}_1$ and $\mathbb{N}_2$ are independent non-homogeneous Poisson process with intensity function $\lambda_1(\cdot)$ and $\lambda_2(\cdot)$, \\
+then $\mathbb{N} = \mathbb{N}_1 + \mathbb{N}_2$ is also a non-homogeneous Poisson process with intensity function $\lambda(t) = \lambda_1(t) + \lambda_2(t)$.\\
+\vspace{\baselineskip}
+\textbf{Proof} is left as exercise.
+\end{frame}
+
+\begin{frame}{Continuous Markov chain}
+\begin{definition}
+The collection $\mathbb{X} = \{X(t) | t\geq 0\}$ of nonnegative integral random variables is a \emph{continuous-time Markov chain} if for all function $x(\cdot)$, nonnegative real numbers $s$ and $t$, and integer $i$ and $j$,
+\begin{align*}
+& P(X(s+t) = j | X(s) = i, X(r) = x(r) \quad\forall r \in [0,s)) \\
+= & P(X(s+t) = j | X(s) = i)
+\end{align*}
+holds.
+\end{definition}
+\begin{itemize}
+\item Assumption: homogeneous transition probabilities $P(X(s+t) = j | X(s) = i)$ is independent of $s$.
+\end{itemize}
 \end{frame}
 
 \end{document}
