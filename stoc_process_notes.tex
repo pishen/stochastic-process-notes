@@ -1,8 +1,7 @@
 \documentclass[mathserif]{beamer}
 \usepackage[sc]{mathpazo}
-\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{lmodern}
+%\usepackage{lmodern}
 \usepackage{amsfonts}
 \usepackage{graphicx}
 \usepackage{color}
@@ -1557,7 +1556,7 @@ So,
 \end{align*}
 \end{frame}
 
-\begin{frame}{Property 1 (Different types of events)}
+\begin{frame}{Property 1 (Different types of events)}\label{property_1}
 \begin{pty}
 Let $\mathbb{N}$ be a Poisson process with rate $\lambda$, 
 each event is classified as type 1 with probability $p$ or type 2 with probability $1-p$.\\
@@ -2177,9 +2176,448 @@ The collection $\mathbb{X} = \{X(t) | t\geq 0\}$ of nonnegative integral random 
 holds.
 \end{definition}
 \begin{itemize}
-\item Assumption: homogeneous transition probabilities $P(X(s+t) = j | X(s) = i)$ is independent of $s$.
+\item The condition above is called \emph{Markovian property}.
+\item Non-homogeneous Poisson process is a continuous Markov chain, where we take the values of $N(t)$ as the states.
 \end{itemize}
 \end{frame}
 
-\end{document}
+\begin{frame}{Homogeneous transition probabilities}
+\begin{definition}
+We say a continuous Markov chain has homogeneous transition probabilities if 
+\[
+P(X(s+t) = j | X(s) = i)
+\]
+is independent of $s$.
+\end{definition}
+\begin{itemize}
+\item Our discussion of continuous Markov chain assumes this property.
+\end{itemize}
+\end{frame}
 
+\begin{frame}{State graph}
+\begin{center}
+\includegraphics[scale=1.0]{state_graph}
+\end{center}
+The state graph of continuous Markov chain can be taken as the state graph of Markov chain without self-links.
+The process will stay on a state for a certain amount of time, and go into a possible next state.
+\end{frame}
+
+\begin{frame}{Observation 1}
+\begin{obs}
+The time for $\mathbb{X}$ to stay in state $i$ is exponentially distributed.
+\end{obs}
+\begin{itemize}
+\item Suppose that $X(r) = i$ for some time $r\geq 0$.
+Let $T_i$ be the waiting time for $\mathbb{X}$ to transit to a state other than $i$.
+We want to prove that $T_i$ is memoryless, that is
+\[
+P(T_i\geq s+t | T_i\geq s) = P(T_i\geq t)
+\]
+hence $T_i$ is exponential distributed.
+\item This also means that for a Poisson process, no matter when the last event happened before, start measuring from now, the waiting time for the next event is still exponential distributed with parameter $\lambda$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Proof}
+\begin{align*}
+& P(T_i\geq s+t | T_i\geq s) \\
+= & P(X(v)=i, \forall r+s\leq v\leq r+s+t | X(u)=i, \forall r\leq u\leq r+s) \\
+\colorbox{cyan}{=} & P(X(v)=i, \forall r+s\leq v\leq r+s+t | X(r+s)=i) \\
+\colorbox{yellow}{=} & P(X(v)=i, \forall r\leq v\leq r+t | X(r)=i) \\
+= & P(T_i\geq t)
+\end{align*}
+\colorbox{yellow}{=} holds because of homogeneous transition probability. \\
+\colorbox{cyan}{=} holds because of Markovian property (more details at next page.)
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+\colorbox{cyan}{=} \textcolor{red}{holds because we can use something like}
+\begin{align*}
+& P(A, B, C, \ldots, Y | Z) \\
+= & P(B, C, \ldots, Y | A, Z)\cdot P(A | Z) \\
+= & P(C, \ldots, Y | A, B, Z)\cdot P(B | A, Z)\cdot P(A | Z) \\
+= & \cdots
+\end{align*}
+\textcolor{red}{and rearrange the condition parts?}
+\end{frame}
+
+\begin{frame}{Observation 2}
+\begin{obs}
+Given that $X(s)=i$, the probability that the next state other than $i$ is $j$ is a value $\mathbb{P}[i,j]$ that is independent of $s$.
+\end{obs}
+\textbf{Proof}: For any state $j$ other than $i$, let $T_i$ be the waiting time for the first transition from state $i$ to a state other than $i$.
+We have
+\[
+\mathbb{P}[i,j] = P(X(T_i + s) = j | X(s) = i) = P(X(T_i) = j | X(0) = i)
+\]
+where the last equation is by homogeneous transition probability.
+\end{frame}
+
+\begin{frame}{Interpretation}
+\begin{itemize}
+\item Starting with $X(0) = i$, the time staying in $i$ is exponential distributed with parameter $\lambda_i$, then $\mathbb{X}$ transits to a different state $j$ with probability $\mathbb{P}[i,j]$.
+\item $\mathbb{X}$ can be characterized by
+\[
+\lambda_i\quad\forall i\in S \qquad\text{and}\qquad \mathbb{P}[i,j]\quad\forall i,j \in S
+\]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Hair cut}
+\begin{itemize}
+\item State 0: no customer
+\item State 1: cut hair
+\item State 2: wash hair
+\end{itemize}
+Assume customers appear as a Poisson process with rate $\lambda'$.
+When a customer appear, if the service is in state 1 or 2, then the customer just leave.
+\begin{itemize}
+\item Staying time in state 1 is exponential distributed with parameter ${\lambda_1}'$.
+\item Staying time in state 2 is exponential distributed with parameter ${\lambda_2}'$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Hair cut (cont.)}
+Characterized as follow:
+\[
+\mathbb{P} = 
+\begin{pmatrix}
+& 1 & 0 \\
+0 & & 1 \\
+1 & 0 & \\
+\end{pmatrix}
+\]
+\[
+\lambda_0 = \lambda', \qquad \lambda_1 = {\lambda_1}', \qquad \lambda_2 = {\lambda_2}'
+\]
+\end{frame}
+
+\begin{frame}{Birth and death process}
+\begin{definition}
+A \emph{birth and death process} with birth rate $\{\beta_n\}, \forall n\geq 0$ and death rate $\{\delta_n\}, \forall n\geq 0$ is a Markov chain that when the state is $n$, 
+\begin{itemize}
+\item The waiting time $B_n$ for it to go to state $n+1$ is exponential distributed with parameter $\beta_n$.
+\item The waiting time $D_n$ for it to go to state $n-1$ is exponential distributed with parameter $\delta_n$.
+\end{itemize}
+\end{definition}
+\end{frame}
+
+\begin{frame}{Birth and death process: characterize}
+\begin{itemize}
+\item $\lambda_0 = \beta_0$
+\item $\lambda_n = \beta_n + \delta_n \quad\forall n > 0$
+\end{itemize}
+The last equation can be seen as a Poisson process with rate $\lambda_n$, where there're two types of events, one is birth and one is death.
+By page \pageref{property_1}, we get the above result and
+\begin{itemize}
+\item $\mathbb{P}[n,n+1] = \frac{\beta_n}{\beta_n + \delta_n} \quad\forall n > 0$
+\item $\mathbb{P}[n,n-1] = \frac{\delta_n}{\beta_n + \delta_n} \quad\forall n > 0$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Servers}
+Given $s$ servers, where
+\begin{itemize}
+\item Jobs arrive in a Poisson process with rate $\lambda$.
+\item Processing time for each job is exponential distributed with parameter $\mu$.
+\end{itemize}
+The number of jobs currently waiting or processing is a B \& D process with
+\begin{itemize}
+\item $\beta_n = \lambda$
+\item $\displaystyle{\delta_n = \left\{
+\begin{array}{l l}
+\mu\cdot n \quad\forall n\leq s \\
+\mu\cdot s \quad\forall n > s \\
+\end{array}
+\right.}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Linear growth with immigration}
+\begin{itemize}
+\item $\beta_n = \beta\cdot n + \theta$
+\item $\delta_n = \delta\cdot n$
+\end{itemize}
+We want to know the value of $E[X(t)]$.\\
+\vspace{\baselineskip}
+\textbf{Solution}:
+\begin{align*}
+& P(X(t+h)=n+1|X(t)=n) = (\beta n + \theta)\cdot h + o(h) \quad\forall n\geq 0 \\
+& P(X(t+h)=n-1|X(t)=n) = \delta n \cdot h + o(h) \quad\forall n\geq 1 \\
+& P(X(t+h)=n|X(t)=n) = 1 - (\beta n + \delta n + \theta)\cdot h + o(h) \quad\forall n\geq 0
+\end{align*}
+Since we make $h$ close to $0$, we ignore other probability that are all $o(h)$.
+\end{frame}
+
+\begin{frame}{Solution (cont.)}
+\begin{align*}
+E[X(t+h)|X(t) = n] & = (n+1)\cdot ((\beta n + \theta)\cdot h + o(h)) \\
+& \qquad + (n-1)\cdot (\delta n\cdot h + o(h)) \\
+& \qquad + n\cdot (1-(\beta n + \delta n + \theta)\cdot h + o(h)) \\
+& \qquad + o(h) \\
+& \vdots \\
+& = n + ((\beta - \delta)n + \theta)\cdot h + o(h)
+\end{align*}
+Hence,
+\begin{align*}
+E[X(t+h)] & = E[E[X(t+h)|X(t)]] \\
+& = (1+(\beta - \delta)\cdot h)\cdot E[X(t)] + \delta h + o(h)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Solution (cont.)}
+\begin{align*}
+\frac{E[X(t+h)]-E[X(t)]}{h} & = (\beta-\delta)\cdot E[X(t)] + \theta + \frac{o(h)}{h} \\
+\frac{d}{dt}E[X(t)] & = (\beta-\delta)\cdot E[X(t)] + \theta
+\end{align*}
+If $\beta = \theta$,
+\begin{align*}
+& \frac{d E[X(t)]}{dt} = \theta \\
+\implies & E[X(t)] = X(0) + \theta t
+\end{align*}
+\end{frame}
+
+\begin{frame}{Solution (cont.)}
+If $\beta \neq \theta$, define $g(t) = (\beta-\delta)\cdot E[X(t)] + \theta$,
+\begin{align*}
+& g'(t) = (\beta - \delta)\cdot \frac{d}{dt}E[X(t)] = (\beta - \delta)\cdot g(t) \\
+& \qquad\vdots \\
+\implies & E[X(t)] = X(0)\cdot e^{(\beta - \delta) t} + \frac{\theta}{\beta - \delta}\cdot (e^{(\beta - \delta) t} - 1)
+\end{align*}
+Note that if $\delta > \beta$,
+\[
+\lim_{t\to\infty} E[t] = \frac{\theta}{\delta - \beta}
+\]
+which is dominated by the immigration.
+\end{frame}
+
+\begin{frame}{Increment time}
+\begin{definition}
+Given a birth and death process, if $X(0)=i$, the increment time is $T_i = \min\{t | X(t) = i+1\}$.
+\end{definition}
+\begin{itemize}
+\item We want to know the value of $E[T_i]$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Expectation of increment time}
+\begin{itemize}
+\item If $i = 0$, $\displaystyle{E[T_0] = \frac{1}{\beta_0}}$
+\item If $i > 0$,
+\begin{align*}
+E[T_i] & = \text{ waiting time for the first event} \\
+& \qquad + 0 \cdot P(\text{the first event is birth}) \\
+& \qquad + (E[T_{i-1}] + E[T_i])\cdot P(\text{the first event is death}) \\
+& = \frac{1}{\beta_i + \delta_i} + 0 + (E[T_{i-1}] + E[T_i])\cdot \frac{\delta_i}{\beta_i + \delta_i} \\
+\implies E[T_i] & = \frac{1}{\beta_i}\cdot (\delta_i\cdot E[T_{i-1}] + 1)
+\end{align*}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Transition probability function}
+\begin{definition}
+The \emph{transition probability function} $P_{ij}(t) = P(X(t) = j | X(0) = i)$.
+\end{definition}
+\begin{itemize}
+\item Note that this is different from the $\mathbb{P}[i,j]$ mentioned before.
+\item There's also value for $P_{ii}(t)$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Trnasition probability function of pure birth process}\label{pure_birth}
+\begin{theorem}
+If $\mathbb{X}$ is a \emph{pure birth process}, where $\delta_n = 0 \quad\forall n\geq 0$, 
+and $\beta_i\neq \beta_j \quad\forall i\neq j$, then
+\[
+P_{ij}(t) = \left\{
+\begin{array}{l l}
+e^{-\beta_i t} & \quad\text{if } i = j \\
+F(i,j) - F(i,j-1) & \quad\text{if } i < j \\
+\end{array}
+\right.
+\]
+where
+\[
+F(i,j) = P(X(t)\leq j | X(0) = i) = \sum_{i\leq k\leq j} e^{-\beta_k t} 
+\prod_{i\leq r\leq j,~ r\neq k}\frac{\beta_r}{\beta_r - \beta_k}
+\]
+\end{theorem}
+\end{frame}
+
+\begin{frame}{Proof}
+When $i < j$,
+\begin{align*}
+F(i,j) & = P(X(t) < j+1 | X(0) = i) \\
+& = P(T_i + T_{i+1} + \cdots + T_j > t) \\
+& \colorbox{yellow}{=} \sum_{i\leq k\leq j} e^{-\beta_k t} 
+\prod_{i\leq r\leq j,~ r\neq k}\frac{\beta_r}{\beta_r - \beta_k}
+\end{align*}
+$\colorbox{yellow}{=}$ is from equation 5.6 on textbook.\\
+\[
+P(T_i + T_{i+1} + \cdots + T_j > t) = 1 - P(T_i + T_{i+1} + \cdots + T_j \leq t)
+\]
+where $P(T_i + T_{i+1} + \cdots + T_j \leq t)$ is the distribution of sum of $j-i+1$ exponential distributions where each one must has different rate.
+\end{frame}
+
+\begin{frame}{Yule process}
+\begin{definition}
+Yule process is a pure birth process with linear rate, 
+where $\delta_n = 0~\forall n\geq 0$ and $\beta_n = \beta\cdot n~\forall n\geq 0$.
+\end{definition}
+According to page \pageref{pure_birth},
+\[
+P_{ij}(t) = \cdots = \binom{j-1}{i-1} (e^{-\beta t})^i \cdot (1 - e^{-\beta t})^{j-i} \quad\forall 1\leq i\leq j
+\]
+which is a negative binomial distribution with parameter $(i, e^{-\beta t})$.
+\end{frame}
+
+\begin{frame}{Instantaneous transition rate}
+\begin{definition}
+Given a continuous Markov chain with each state $i$ having the exponential parameter $\lambda_i$,
+the \emph{instantaneous transition rate} is
+\[
+q_{ij} = \lambda_i\cdot \mathbb{P}[i,j]
+\]
+we let $q_{ii} = 0$ for the ease of later explanation.
+\end{definition}
+\begin{itemize}
+\item Given all the $q_{ij}$, one can compute $\lambda_i$ by $\sum_{j\in S} q_{ij}$, and then compute all the value of $\mathbb{P}[i,j]$.
+Hence $q_{ij}$ also characterize the continuous Markov chain.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Komolgorov forward equation}
+\begin{theorem}
+For most of the continuous Markov chain (ex.\ birth and death process), the following holds:
+\[
+{P_{ij}}'(t) = \sum_{k\in S} P_{ik}(t)\cdot q_{kj} - \lambda_j\cdot P_{ij}(t)
+\]
+\end{theorem}
+\end{frame}
+
+\begin{frame}{Komolgorov backward equation}
+\begin{theorem}
+For all the continuous Markov chain, the following holds:
+\[
+{P_{ij}}'(t) = \sum_{k\in S} q_{ik}\cdot P_{kj}(t) - \lambda_i\cdot P_{ij}(t)
+\]
+\end{theorem}
+\begin{itemize}
+\item We only prove this equation (at page \pageref{backward_pf}).
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Lemma 1}
+\begin{lemma}
+\begin{enumerate}
+\item $\displaystyle{\lim_{h\to 0}\frac{1-P_{ii}(h)}{h} = \lambda_i}$
+\item $\displaystyle{\lim_{h\to 0}\frac{P_{ij}(h)}{h} = q_{ij} \quad\text{if } i\neq j}$
+\end{enumerate}
+\end{lemma}
+We prove this lemma by proving the equivalence that
+\begin{enumerate}
+\item $1 - P_{ii}(h) = \lambda_i\cdot h + o(h)$
+\item $P_{ij}(h) = q_{ij}\cdot h + o(h)$
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Proof}
+\textbf{Equation 1}: In the interval of $h$,
+\begin{align*}
+P_{ii}(h) & = P(\text{no transition happen}) \\
+\qquad & + P(\text{more than one transitions and come back to state $i$}) \\
+\implies 1 - P_{ii}(h) & = P(\text{one transition happens}) \\
+\qquad & + P(\text{more than one transitions and doesn't come back}) \\
+& \colorbox{yellow}{=} \lambda_i\cdot h + o(h)
+\end{align*}
+$\colorbox{yellow}{=}$ is according to operational definition on page \pageref{operation_def}.
+\end{frame}
+
+\begin{frame}{Proof (cont.)}
+\textbf{Equation 2}: In the interval of $h$,
+\begin{align*}
+P_{ij}(h) & = P(\text{one $i\to j$ transition happens}) \\
+\qquad & + P(\text{more than one transitions and the final state is $j$}) \\
+& = (\lambda_i\cdot h + o(h))\cdot \mathbb{P}[i,j] + o(h) \\
+& = \lambda_i\cdot \mathbb{P}[i,j]\cdot h + o(h) \\
+& = q_{ij}\cdot h + o(h)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Lemma 2}
+\begin{lemma}
+\[
+P_{ij}(t+s) = \sum_{k\in S} P_{ik}(t)\cdot P_{kj}(s) \quad\forall s\geq 0, t\geq 0
+\]
+\end{lemma}
+\end{frame}
+
+\begin{frame}{Proof}
+\begin{align*}
+P_{ij}(t+s) & = P(X(t+s) = j | X(0) = i) \\
+& = \sum_{k\in S} P(X(t+s) = j, X(t) = k | X(0) = i) \\
+& = \sum_{k\in S} P(X(t+s) = j | X(t) = k, X(0) = i)\cdot P(X(t) = k | X(0) = i) \\
+& \colorbox{yellow}{=} \sum_{k\in S} P(X(t+s) = j | X(t) = k)\cdot P(X(t) = k | X(0) = i) \\
+& \colorbox{cyan}{=} \sum_{k\in S} P(X(s) = j | X(0) = k)\cdot P(X(t) = k | X(0) = i) \\
+& = \sum_{k\in S} P_{ik}(t)\cdot P_{kj}(s)
+\end{align*}
+$\colorbox{yellow}{=}$ is by Markovian property.\\
+$\colorbox{cyan}{=}$ is by homogeneous transition probability.
+\end{frame}
+
+\begin{frame}{Proof of backward equation}\label{backward_pf}
+\begin{align*}
+P_{ij}(h+t) - P_{ij}(t) & \colorbox{yellow}{=} \left( \sum_{k\geq 0} P_{ik}(h)\cdot P_{kj}(t) \right) - P_{ij}(t) \\
+& = \left( \sum_{k\geq 0, k\neq i} P_{ik}(h)\cdot P_{kj}(t) \right) - (1 - P_{ii}(h))\cdot P_{ij}(t) \\
+\implies {P_{ij}}'(t) & = \lim_{h\to 0}
+\left( \sum_{k\geq 0, k\neq i} \frac{P_{ik}(h)}{h}\cdot P_{kj}(t) \right)
+ - \frac{1 - P_{ii}(h)}{h}\cdot P_{ij}(t) \\
+& \colorbox{cyan}{=} \sum_{k\geq 0} q_{ik}\cdot P_{kj}(t) - \lambda_i\cdot P_{ij}(t)
+\end{align*}
+$\colorbox{yellow}{=}$ is by lemma 2.\\
+$\colorbox{cyan}{=}$ is by lemma 1 and that $\lim$ can be swap in the situation here.
+\end{frame}
+
+\begin{frame}{Example: Pure birth process}
+\[
+\lambda_i = \beta_i \text{ and } \mathbb{P}[i,i+1] = 1
+\]
+Hence
+\[
+{P_{ij}}'(t) = \beta_i\cdot P_{i+1,j}(t) - \beta_i\cdot P_{ij}(t)
+\]
+\end{frame}
+
+\begin{frame}{Example: Birth and death process}
+If $i = 0$,
+\[
+{P_{0j}}'(t) = \beta_0\cdot P_{1j}(t) - \beta_0\cdot P_{0j}(t)
+\]
+If $i > 0$,
+\begin{align*}
+{P_{ij}}'(t) & = (\beta_i + \delta_i)\cdot \frac{\beta_i}{\beta_i + \delta_i}\cdot P_{i+1,j}(t) \\
+& \qquad + (\beta_i + \delta_i)\cdot \frac{\delta_i}{\beta_i + \delta_i}\cdot P_{i-1,j}(t) \\
+& \qquad - (\beta_i + \delta_i)\cdot P_{ij}(t)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Example: A simple case}
+There're only two states 0 and 1, where 0 has rate $\beta$ and 1 has rate $\delta$.
+\begin{align*}
+& \left.
+\begin{array}{l}
+{P_{00}}'(t) = \beta (P_{10}(t) - P_{00}(t)) \\
+{P_{10}}'(t) = \delta (P_{00}(t) - P_{10}(t)) \\
+\end{array}
+\right\} \delta\cdot {P_{00}}'(t) + \beta\cdot {P_{10}}'(t) = 0 \\
+\implies & \delta\cdot P_{00}(t) + \beta\cdot P_{10}(t) = C \\
+\implies & \text{since $P_{00}(0) = 1$ and $P_{10}(0) = 0$, we know } C = \delta \\
+\implies & \beta\cdot P_{10}(t) = \delta(1 - P_{00}(t)) \\
+\implies & {P_{00}}'(t) = \delta - (\delta + \beta)\cdot P_{00}(t) \\
+\implies & P_{00}(t) = \frac{\delta}{\beta + \delta} e^{-(\beta + \delta)t}
+ + \frac{\beta}{\beta + \delta} \text{ and} \\
+& P_{10}(t) = \cdots
+\end{align*}
+\end{frame}
+
+\end{document}
