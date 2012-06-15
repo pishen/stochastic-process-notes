@@ -2315,7 +2315,7 @@ By page \pageref{property_1}, we get the above result and
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Example: Servers}
+\begin{frame}{Example: M/M/s Servers}
 Given $s$ servers, where
 \begin{itemize}
 \item Jobs arrive in a Poisson process with rate $\lambda$.
@@ -2424,7 +2424,7 @@ The \emph{transition probability function} $P_{ij}(t) = P(X(t) = j | X(0) = i)$.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Trnasition probability function of pure birth process}\label{pure_birth}
+\begin{frame}{Transition probability function of pure birth process}\label{pure_birth}
 \begin{theorem}
 If $\mathbb{X}$ is a \emph{pure birth process}, where $\delta_n = 0 \quad\forall n\geq 0$, 
 and $\beta_i\neq \beta_j \quad\forall i\neq j$, then
@@ -2575,7 +2575,7 @@ P_{ij}(h+t) - P_{ij}(t) & \colorbox{yellow}{=} \left( \sum_{k\geq 0} P_{ik}(h)\c
 & \colorbox{cyan}{=} \sum_{k\geq 0} q_{ik}\cdot P_{kj}(t) - \lambda_i\cdot P_{ij}(t)
 \end{align*}
 $\colorbox{yellow}{=}$ is by lemma 2.\\
-$\colorbox{cyan}{=}$ is by lemma 1 and that $\lim$ can be swap in the situation here.
+$\colorbox{cyan}{=}$ is by lemma 1 and that $\lim$ can be swap (photo \texttt{P1070502}).
 \end{frame}
 
 \begin{frame}{Example: Pure birth process}
@@ -2614,10 +2614,424 @@ There're only two states 0 and 1, where 0 has rate $\beta$ and 1 has rate $\delt
 \implies & \text{since $P_{00}(0) = 1$ and $P_{10}(0) = 0$, we know } C = \delta \\
 \implies & \beta\cdot P_{10}(t) = \delta(1 - P_{00}(t)) \\
 \implies & {P_{00}}'(t) = \delta - (\delta + \beta)\cdot P_{00}(t) \\
-\implies & P_{00}(t) = \frac{\delta}{\beta + \delta} e^{-(\beta + \delta)t}
- + \frac{\beta}{\beta + \delta} \text{ and} \\
+\implies & P_{00}(t) = \frac{\beta}{\beta + \delta} e^{-(\beta + \delta)t}
+ + \frac{\delta}{\beta + \delta} \text{ and} \\
 & P_{10}(t) = \cdots
 \end{align*}
+\end{frame}
+
+\begin{frame}{Limiting probability}
+\begin{definition}
+If $\lim_{t\to\infty} P_{ij}(t)$ exists and is independent of $i$, then
+\[
+\pi_j = \lim_{t\to\infty} P_{ij}(t)
+\]
+is the limiting probability of state $j$.
+\end{definition}
+\end{frame}
+
+\begin{frame}{Some facts of the limiting probability}
+If $\mathbb{X}$ is irreducible and positive recurrent, then
+\begin{enumerate}
+\item $\pi = (\pi_1, \pi_2, \ldots)$ exists.
+\item $\sum_{i\in S} \pi_i = 1$
+\item $\pi$ is the unique stationary distribution of $\mathbb{X}$.
+\item $\pi_j$ is the long-run proportion of state $j$.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Balance equation}
+Consider on the birth and death process and finite states continuous Markov chain.
+We can prove that above two processes have limiting probability, which means that
+\[
+\lim_{t\to\infty} {P_{ij}}'(t) = 0
+\]
+then from the forward equation, we know
+\begin{align*}
+\lim_{t\to\infty} {P_{ij}}'(t) & = \lim_{t\to\infty} \sum_{k\geq 0} P_{ik}(t) q_{kj} - \lambda_j P_{ij}(t) \\
+& \colorbox{yellow}{=} \sum_{k\geq 0}\pi_k\cdot q_{kj} - \lambda_j\cdot \pi_j = 0
+\end{align*}
+The $\lim$ at $\colorbox{yellow}{=}$ can be swap inside.
+\end{frame}
+
+\begin{frame}{Balance equation (cont.)}
+Hence, we know that
+\[
+\lambda_j \pi_j = \sum_{k\geq 0} q_{kj} \pi_k \quad\forall j\geq 0
+\]
+which is called the \emph{balance equation}. \\
+\vspace{\baselineskip}
+If we take each transition in the process as an event, the events of ``leaving from state $j$'' forms a Poisson process with rate $\lambda_j \pi_j$, and the events of ``entering state $j$'' forms a Poisson process with rate $\sum_{k\geq 0} q_{kj} \pi_k$.\\
+\end{frame}
+
+\begin{frame}{Interpretation of balance equation}
+\begin{itemize}
+\item Take the process as infinite transitions (include the type as $i\to i$).
+\item Now consider the transitions that can form a Poisson process with rate $\lambda_j$.
+\item One can observe that only $\pi_j$ of these transitions can match as a transition leaving from state $j$.
+\item Hence we know that this type of transitions is also a Poisson process with rate $\lambda_j \pi_j$.
+\item \textcolor{red}{if still not clear, prove it formally :p}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Hair cut}
+\begin{center}
+\includegraphics[scale=1.0]{hair_cut}
+\end{center}
+According to balance equation:
+\begin{align*}
+\lambda_0 \pi_0 & = \lambda_2 \pi_2 \\
+\lambda_1 \pi_1 & = \lambda_0 \pi_0 \\
+\lambda_2 \pi_2 & = \lambda_1 \pi_1
+\end{align*}
+And by $\pi_0 + \pi_1 + \pi_2 = 1$, we can represent $\pi_0$, $\pi_1$, $\pi_2$ by $\lambda_0$, $\lambda_1$, and $\lambda_2$.
+\end{frame}
+
+\begin{frame}{Example: Birth and death process}
+According to balance equation:
+\begin{align*}
+\beta_0 \pi_0 & = \delta_1 \pi_1 \\
+(\beta_1 + \delta_1)\pi_1 & = \beta_0 \pi_0 + \delta_2 \pi_2 \\
+& \vdots \\
+(\beta_n + \delta_n)\pi_n & = \beta_{n-1} \pi_{n-1} + \delta_{n+1} \pi_{n+1}
+\end{align*}
+which implies
+\begin{align*}
+\beta_0 \pi_0 & = \delta_1 \pi_1 \\
+\beta_1 \pi_1 & = \delta_2 \pi_2 \\
+& \vdots \\
+\beta_n \pi_n & = \delta_{n+1} \pi_{n+1}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Example: Birth and death process (cont.)}
+\begin{align*}
+\pi_1 & = \frac{\beta_0}{\delta_1} \pi_0 \\
+\pi_2 & = \frac{\beta_1}{\delta_2} \pi_1 = \frac{\beta_1 \beta_0}{\delta_2 \delta_1}\pi_0 \\
+& \vdots \\
+\pi_n & = \frac{\beta_0 \beta_1 \cdots \beta_{n-1}}{\delta_1 \delta_2 \cdots \delta_n} \pi_0
+\end{align*}
+By $\sum_{i\geq 0} \pi_i = 1$, we have
+\[
+\pi_0 = \frac{1}{1 + \sum_{k\geq 1}\frac{\beta_0 \beta_1 \cdots \beta_{k-1}}{\delta_1 \delta_2 \cdots \delta_k}}
+~\text{and}~ \pi_n = \frac{\beta_0 \beta_1 \cdots \beta_{n-1}}{\delta_1 \delta_2 \cdots \delta_n
+(1 + \sum_{k\geq 1}\frac{\beta_0 \beta_1 \cdots \beta_{k-1}}{\delta_1 \delta_2 \cdots \delta_k})}
+\]
+\end{frame}
+
+\begin{frame}{Example: Birth and death process (cont.)}
+As a matter of fact,
+\[
+\sum_{k\geq 1}\frac{\beta_0 \beta_1 \cdots \beta_{k-1}}{\delta_1 \delta_2 \cdots \delta_k} < \infty
+\iff
+\sum_{i\geq 0} \pi_i = 1
+\]
+Ohterwise, each $\pi_i$ would have value $0$.
+\end{frame}
+
+\begin{frame}{Example: M/M/s servers}
+\[
+\beta_n = \beta, \qquad \delta_n = \left\{
+\begin{array}{l l}
+n\cdot \delta & \quad\text{if } n < s \\
+s\cdot \delta & \quad\text{if } n\geq s \\
+\end{array}
+\right.
+\]
+To make $\sum_{i\geq 0} \pi_n = 1$,
+\begin{align*}
+\sum_{k\geq 1}\frac{\beta_0 \beta_1 \cdots \beta_{k-1}}{\delta_1 \delta_2 \cdots \delta_k} < \infty
+& \iff
+\sum_{k\geq s}\frac{\beta^k}{(s\cdot \delta)^k} < \infty \\
+& \iff 
+\frac{\beta}{s\cdot \delta} < 1
+\iff
+\frac{\beta}{\delta} < s
+\end{align*}
+\end{frame}
+
+\begin{frame}{Example: Server crash}
+There are $s$ servers.
+Each server has parameter $\beta$ of crashing.
+Only one person is fixing the servers, with parameter $\delta$.
+We want to know:
+\begin{enumerate}
+\item The time proportion that no server is in crash.
+\item Expectation number of crashing servers.
+\end{enumerate}
+\vspace{\baselineskip}
+\textbf{Solution}:\\
+Let state $n$ represents that there are $n$ crashed servers.
+\[
+\delta_n = \left\{ 
+\begin{array}{l l}
+\delta & \quad\forall 1\leq n\leq s \\
+0 & \quad\text{otherwise}
+\end{array}
+\right.
+\qquad
+\beta_n = \left\{
+\begin{array}{l l}
+(s - n)\beta & \quad\forall 0\leq n\leq s \\
+0 & \quad\text{otherwise}
+\end{array}
+\right.
+\]
+\end{frame}
+
+\begin{frame}{Solution to question 1}
+\begin{align*}
+\pi_0 & = \frac{1}{1 + \sum_{k=1}^s \frac{\beta_0 \beta_1 \cdots \beta_{k-1}}{\delta_1 \delta_2 \cdots \delta_k}} \\
+& = \frac{1}{1 + \sum_{k=1}^s \frac{s\beta\cdot (s-1)\beta \cdots (s-k+1)\beta}{\delta^k}} \\
+& = \frac{1}{1 + \sum_{k=1}^s \left( \frac{\beta}{\delta} \right)^k \frac{s!}{(s-k)!}}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Solution to question 2}
+From previous page, we know
+\[
+\pi_n = \frac{\left( \frac{\beta}{\delta} \right)^n \frac{s!}{(s-n)!}}
+{1 + \sum_{k=1}^s \left( \frac{\beta}{\delta} \right)^k \frac{s!}{(s-k)!}}
+\]
+Hence, the expectation is
+\[
+\sum_{n=0}^s n\cdot \pi_n
+\]
+\end{frame}
+
+\begin{frame}{Example: Server crash advanced}
+Given $n$ servers.
+The working time parameter for the $i$th server is $s_i$.
+And the fixing time parameter is $r_i$.
+There's only one TA, who will fix the most recently crashed server in the first priority.\\
+\vspace{\baselineskip}
+We use $(i_1, i_2, \ldots, i_k)$ to represent the state that $k$ servers crash, $i_j$ is the $j$th recently crashed server.
+And use $\phi$ as the state that all the servers are working.
+Hence, we have $\sum_{k=0}^n \binom{n}{k} k!$ different states.
+\end{frame}
+
+\begin{frame}{Example: Server crash advanced (cont.)}
+According to balance equation:
+\[
+\sum_{i=1}^n s_i\cdot \pi(\phi) = \sum_{i=1}^n r_i\cdot \pi(i)
+\]
+\begin{align*}
+& \left( r_{i_1} + \sum_{i\notin\{i_1, i_2, \ldots, i_k\}}s_i \right)\cdot \pi(i_1, i_2, \ldots, i_k) \\
+= &~ s_{i_1}\cdot \pi(i_2, \ldots, i_k) + \sum_{i\notin\{i_1, i_2, \ldots, i_k\}} r_i\cdot \pi(i, i_1, i_2, \ldots, i_k)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Example: Server crash advanced (cont.)}
+\begin{align*}
+\pi(\phi) & = \frac{1}{1 + \sum_{(i_1, i_2, \ldots, i_k)} \frac{s_{i_1} s_{i_2}\cdots s_{i_k}}{r_{i_1} r_{i_2}\cdots r_{i_k}}} \\
+\pi(i_1, i_2, \ldots, i_k) & = \frac{s_{i_1} s_{i_2}\cdots s_{i_k}}{r_{i_1} r_{i_2}\cdots r_{i_k}}\cdot \pi(\phi)
+\end{align*}
+\end{frame}
+
+\begin{frame}{Time reversibility}
+\begin{itemize}
+\item Assume $\mathbb{X}$ is irreducible and positive recurrent.
+We say $\mathbb{X} \to \mathbb{X}^*$ is a discretization that changes each inter-arrival time of $\mathbb{X}$ to $1$.
+\item $\mathbb{X}^*$ can now be seen as a discrete Markov chain, which still satisfies irreducible and positive recurrent.
+\item Assume $\mathbb{X}^*$ is aperiodic, we can take the matrix $\mathbb{P}$ of $\mathbb{X}$ as the transition matrix of $\mathbb{X}^*$ in the discrete Markov chain.
+\item We know that $\mathbb{X}^*$ has the limiting probability vector $\pi^*$, and
+\[
+\pi^*\times \mathbb{P} = \pi^*, \quad \sum_{i\in S} \pi_i^* = 1
+\]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Time reversibility (cont.)}
+According to balance equation,
+\[
+\lambda_j\cdot \pi_j = \sum_{k\in S} \lambda_k\cdot \pi_k\cdot \mathbb{P}[k,j]
+\]
+If we let $\hat{\pi} = (\lambda_1 \pi_1, \lambda_2 \pi_2, \ldots)$, we know that
+$\hat{\pi}\times \mathbb{P} = \hat{\pi}$ and $\frac{\hat{\pi}}{\sum_{i\in S} \hat{\pi}_i}$ is the unique vector that is $\pi^*$. Hence,
+\[
+\pi_i^* = \frac{\pi_i\cdot \lambda_i}{\sum_{j\in S} \pi_j\cdot \lambda_j} ~\text{and}~
+\pi_i = \frac{\pi_i^* / \lambda_i}{\sum_{j\in S} \pi_j^* / \lambda_j}
+\]
+\end{frame}
+
+\begin{frame}{Time reversibility (cont.)}
+According to the time reversibility of discrete Markov chain, we know
+\begin{itemize}
+\item The reversed chain $\mathbb{Y}^*$ of $\mathbb{X}^*$, which is also a Markov chain, has transition matrix $\mathbb{Q}$ such that
+\[
+\pi_i^*\cdot \mathbb{Q}[i,j] = \pi_j^*\cdot \mathbb{P}[j,i] \quad\forall i,j \in S
+\]
+\item If
+\[
+\pi_i^*\cdot \mathbb{P}[i,j] = \pi_j^*\cdot \mathbb{P}[j,i] \quad\forall i,j \in S
+\]
+then $\mathbb{X}^*$ is time-reversible.
+\item If we can find any vector $\hat{\pi}$ such that
+\[
+\hat{\pi}_i\cdot \mathbb{P}[i,j] = \hat{\pi}_j\cdot \mathbb{P}[j,i] \quad\forall i,j \in S ~\text{and}~
+\sum_{i\in S} \hat{\pi}_i = 1
+\]
+then $\hat{\pi} = \pi^*$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Time reversibility (cont.)}
+\begin{itemize}
+\item If $\mathbb{X}$ is in steady state, which means that $P(X(t) = i) = \pi_i ~\forall i\in S$, we can prove that the reversed chain $\mathbb{Y}$ of $\mathbb{X}$ is also a continuous Markov chain.
+\item Since the discretization of $\mathbb{Y}$ is $\mathbb{Y}^*$, $\mathbb{Q}$ would also be the matrix for $\mathbb{Y}$.
+\item To characterize $\mathbb{Y}$, we use $\mathbb{Q}[i,j] = \pi_j^*\cdot \mathbb{P}[j,i] / \pi_i^*$ and each $\lambda_i$ are the same as $\mathbb{X}$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Time reversibility (cont.)}
+If $\mathbb{X}$ is time reversible, then $\mathbb{Q} = \mathbb{P}$, which means that $\mathbb{X}^*$ is also time reversible.
+And we know that
+\begin{align*}
+& \pi_i^*\cdot \mathbb{P}[i,j] = \pi_j^*\cdot \mathbb{P}[j,i] \\
+\iff & \lambda_i\cdot \pi_i\cdot \mathbb{P}[i,j] = \lambda_j\cdot \pi_j\cdot \mathbb{P}[j,i] \\
+\iff & \pi_i\cdot q_{ij} = \pi_j\cdot q_{ji}
+\end{align*}
+\begin{itemize}
+\item LHS is the Poisson rate of $i\to j$ transitions.
+\item RHS is the Poisson rate of $j\to i$ transitions.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Birth and death process}
+Since $\pi_i\cdot q_{i,(i+1)}$ is the Poisson rate (i.e. $\lambda$) of $i\to i+1$ transitions,
+\[
+E[\text{number of $i\to i+1$ in $[s,s+t]$}] = \pi_i\cdot q_{i,(i+1)}\cdot t
+\]
+Hence
+\begin{align*}
+\pi_i\cdot q_{i,(i+1)} & = \frac{E[\text{number of $i\to i+1$ in $[s,s+t]$}]}{t} \\
+& \colorbox{yellow}{=} \frac{E[\text{number of $i + 1\to i$ in $[s,s+t]$}]}{t} = \pi_{i+1}\cdot q_{(i+1),i}
+\end{align*}
+\begin{itemize}
+\item Then we know that B \& D process is time reversible.
+\item \colorbox{yellow}{=} is because one must go back from $i+1$ to $i$ to go from $i$ to $i+1$ again.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: M/M/s servers}
+M/M/s is a birth and death process, it's time-reversible when in steady state ($\frac{\beta}{\delta} < s$).
+We want to prove that the overall process of job departing is a Poisson process with rate $\beta$.\\
+\vspace{\baselineskip}
+\textbf{Proof}: Since it's time reversible, the rate of $i\to i-1$ is equal to the rate of $i-1\to i$, which is $\beta$.
+\end{frame}
+
+\begin{frame}{Example: M/M/1 server}
+In the M/M/1 system, if a job $J$ stays for a time interval $t$, what is the distribution of the number of jobs already in the system when $J$ enter this system?\\
+\vspace{\baselineskip}
+\textbf{Solution}: Assume $J$ arrives at $s$ and depart at $s+t$, we know that all the jobs queuing in system at time $s$ will depart in $[s,s+t]$, and the distribution of job departing in $[s,s+t]$ is Poisson with parameter $\beta\cdot t$ from the previous example.
+\end{frame}
+
+\begin{frame}{Theorem on the other direction}
+\begin{theorem}
+If there exists a nonnegative vector $\pi$ with 
+\[
+\sum_{i\in S} \pi_i = 1 ~\text{and}~ \pi_i\cdot q_{ij} = \pi_j\cdot q_{ji}\quad\forall i,j\in S
+\]
+then $\mathbb{X}$ is a time-reversible chain and $\pi$ is the limiting probability of $\mathbb{X}$.
+\end{theorem}
+\end{frame}
+
+\begin{frame}{Example: Server crash advanced}
+Given $n$ servers. The working time parameter for the $i$th server is $\beta_i$.
+And the fixing time parameter is $\delta_i / k$ if there are $k$ servers currently crashed.
+We want to know if this process is time reversible?\\
+\vspace{\baselineskip}
+We use a set $D\subseteq \{1,2,\ldots,n\}$ to represent the state of crashed servers.
+There are $2^n$ different states.
+If $i\notin D$ and $|D| = k-1$ with $k\geq 1$, then
+\[
+q_{D,D\cup\{i\}} = \beta_i ~\text{and}~ q_{D\cup\{i\},D} = \frac{\delta_i}{k}
+\]
+\end{frame}
+
+\begin{frame}{Example: Server crash advanced (cont.)}
+We prove the time reversibility by guessing a $\pi$ to satisfy
+\[
+\pi_D\cdot \beta_i = \pi_{D\cup\{i\}}\cdot \frac{\delta_i}{k}
+\]
+that is
+\begin{align*}
+\pi_\phi & = \frac{1}{1 + \sum_{\phi\neq D\subseteq \{1,2,\ldots,n\}} |D|!\cdot \prod_{i\in D}\frac{\beta_i}{\delta_i}} \\
+\pi_D & = (|D|!\cdot \prod_{i\in D}\frac{\beta_i}{\delta_i})\cdot \pi_\phi
+\end{align*}
+\end{frame}
+
+\begin{frame}{Truncated Markov chain}
+\begin{definition}
+Given a set $A$ of states of $\mathbb{X}$, $\mathbb{X}^A$ is the \emph{truncated chain} of $\mathbb{X}$ w.r.t.\ $A$,
+where the matrix of $q_{ij}$ is induced by $i,j\in A$.
+\end{definition}
+\begin{itemize}
+\item We can see that if $\mathbb{X}$ is time reversible, so is $\mathbb{X}^A$.
+Since we can find a $\pi^A$ that $\pi_i^A = \pi_i / \sum_{k\in A}\pi_k$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Uniformization}
+\begin{definition}
+\emph{Uniformization} is a transformation that makes $\mathbb{X}$ into $\mathbb{Y}_\lambda$, where $\lambda_i = \lambda\quad\forall i\in S$.
+\end{definition}
+\begin{itemize}
+\item All the transitions of $\mathbb{Y}_\lambda$ forms a Poisson process with rate $\lambda$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Theorem: Transition matrix of uniformized chain}
+\begin{theorem}
+If $\mathbb{Q}$ is the transition matrix of $\mathbb{Y}_\lambda$, then
+\[
+Q_{ij}(t) = \sum_{n=0}^\infty \mathbb{Q}^n[i,j]\cdot e^{-\lambda t}\cdot \frac{(\lambda t)^n}{n!}
+\]
+\end{theorem}
+\begin{itemize}
+\item $Q_{ij}(t)$ is the transition probability function.
+\item Note that $\mathbb{Q}^n[i,j]\neq (\mathbb{Q}[i,j])^n$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Proof}
+Let $N(t)$ represents the number of transitions in $[0,t]$.
+\begin{align*}
+\text{LHS} & = \sum_{n=0}^\infty P(Y_\lambda(t)=j | Y_\lambda(0)=i, N(t)=n)
+\cdot P(N(t)=n | Y_\lambda(0)=i) \\
+& = \sum_{n=0}^\infty \mathbb{Q}^n[i,j]\cdot \frac{(\lambda t)^n e^{-\lambda t}}{n!} \\
+& = \text{RHS}
+\end{align*}
+\end{frame}
+
+\begin{frame}{Application of uniformization}
+\begin{itemize}
+\item Let $\mathbb{X}$ be a continuous Markov chain with $\lambda_i\leq \lambda\quad\forall i$.
+\item We can think as the transition rate for all states $i$ are $\lambda$, but when the transition happens, it has probability $\lambda_i / \lambda$ that it will really transit to other state, and with probability $1 - (\lambda_i / \lambda)$ it will keep in state $i$.
+\item We then have $\mathbb{Y}_\lambda$ with
+\[
+\mathbb{Q}[i,j] = \left\{
+\begin{array}{l l}
+1 - \frac{\lambda_i}{\lambda} & \quad i=j \\
+\frac{\lambda_i}{\lambda}\cdot \mathbb{P}[i,j] & \quad i\neq j \\
+\end{array}
+\right.
+\]
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example}
+For an example with only two states 0 and 1, where $\lambda_0 = \beta$ and $\lambda_1 = \delta$,
+we do the uniformization with $\lambda = \beta + \delta$.
+Then
+\[
+\mathbb{Q} = \begin{pmatrix}
+\frac{\delta}{\beta + \delta} & \frac{\beta}{\beta + \delta} \\
+\frac{\delta}{\beta + \delta} & \frac{\beta}{\beta + \delta} \\
+\end{pmatrix}
+\]
+We can observe that $\mathbb{Q}^n = \mathbb{Q} \quad\forall n\geq 1$.
+And we can obtain the value of each $Q_{ij}(t)$.
 \end{frame}
 
 \end{document}
