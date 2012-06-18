@@ -1716,7 +1716,7 @@ $X_1, X_2, \ldots, X_r$ are independent since $\mathbb{N}_1, \mathbb{N}_2, \ldot
 \begin{frame}{Solution: Second attempt (cont.)}
 We can see that
 \begin{align*}
-P(X\leq t) & = P(X_1\leq t, X_2\leq t, \cdot, X_r\leq t) \\
+P(X\leq t) & = P(X_1\leq t, X_2\leq t, \cdots, X_r\leq t) \\
 & = \prod_{i=1}^r P(X_i\leq t) = \prod_{i=1}^r (1 - e^{-t\cdot p_i})
 \end{align*}
 And
@@ -1786,8 +1786,8 @@ For any $0 < x_1 < x_2 < \ldots < x_n < t$,
 & f_{X_{(1)}, X_{(2)}, \ldots, X_{(n)}}(x_1, x_2, \ldots, x_n | N(t)=n) \\
 & = \frac{f_{X_{(1)}, X_{(2)}, \ldots, X_{(n)}, N(t)}(x_1, x_2, \ldots, x_n, n)}{P(N(t) = n)} \\
 & = \frac{f_{T_1, T_2, \ldots, T_n}(x_1, x_2 - x_1, \ldots, x_n - x_{n-1})\cdot P(T_{n+1} > t - x_n)}{P(N(t) = n)} \\
-& = \frac{\lambda e^{-\lambda x_1}\cdot\lambda e^{-\lambda(x_2-x_1)}\cdots\lambda e^{-\lambda(x_n-x_{n-1})}\cdot e^{\lambda(t-x_n)}}{\frac{e^{-\lambda t}(\lambda t)^n}{n!}} \\
-& = \frac{n!}{t}
+& = \frac{\lambda e^{-\lambda x_1}\cdot\lambda e^{-\lambda(x_2-x_1)}\cdots\lambda e^{-\lambda(x_n-x_{n-1})}\cdot e^{-\lambda(t-x_n)}}{\frac{e^{-\lambda t}(\lambda t)^n}{n!}} \\
+& = \frac{n!}{t^n}
 \end{align*}
 $T_i$ are the inter-arrival times, which are exponential distributed.
 \end{frame}
