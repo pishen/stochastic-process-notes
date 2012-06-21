@@ -1792,7 +1792,7 @@ For any $0 < x_1 < x_2 < \ldots < x_n < t$,
 $T_i$ are the inter-arrival times, which are exponential distributed.
 \end{frame}
 
-\begin{frame}{Corollary of property 2 (simple version)}
+\begin{frame}{Corollary of property 1 (simple version)}
 \begin{corollary}
 Consider a Poisson process with rate $\lambda$.\\
 Each event is classified into a type $i$, where there are $r$ types of event. \\
@@ -1836,7 +1836,7 @@ Hence we know that each $N_i(t)$ is Poisson distributed with parameter $\lambda 
 (Check Example 3.23 on textbook.)
 \end{frame}
 
-\begin{frame}{Corollary of property 2 (full version)}
+\begin{frame}{Corollary of property 1 (full version)}
 \begin{corollary}
 Consider a Poisson process with rate $\lambda$.\\
 Each event is classified into a type $i$, where there are $r$ types of event. \\
@@ -2370,7 +2370,7 @@ E[X(t+h)] & = E[E[X(t+h)|X(t)]] \\
 \frac{E[X(t+h)]-E[X(t)]}{h} & = (\beta-\delta)\cdot E[X(t)] + \theta + \frac{o(h)}{h} \\
 \frac{d}{dt}E[X(t)] & = (\beta-\delta)\cdot E[X(t)] + \theta
 \end{align*}
-If $\beta = \theta$,
+If $\beta = \delta$,
 \begin{align*}
 & \frac{d E[X(t)]}{dt} = \theta \\
 \implies & E[X(t)] = X(0) + \theta t
@@ -2378,7 +2378,7 @@ If $\beta = \theta$,
 \end{frame}
 
 \begin{frame}{Solution (cont.)}
-If $\beta \neq \theta$, define $g(t) = (\beta-\delta)\cdot E[X(t)] + \theta$,
+If $\beta \neq \delta$, define $g(t) = (\beta-\delta)\cdot E[X(t)] + \theta$,
 \begin{align*}
 & g'(t) = (\beta - \delta)\cdot \frac{d}{dt}E[X(t)] = (\beta - \delta)\cdot g(t) \\
 & \qquad\vdots \\
